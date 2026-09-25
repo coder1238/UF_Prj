@@ -328,7 +328,7 @@ export function LocationAuditReportModal({ place, onClose }) {
             </span>
             <div>
               <h3 className="text-lg font-bold text-ink">Citizen Basin Flood Risk Audit Card</h3>
-              <p className="text-xs text-muted font-mono">Issued by Mumbai Urban Flood Intelligence Portal</p>
+              <p className="text-xs text-muted font-mono">Issued by the HydroSense Citizen Portal</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -569,4 +569,3 @@ export function LocationEditModal({ place, onClose, onSave }) {
     </div>
   );
 }
-

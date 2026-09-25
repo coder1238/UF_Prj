@@ -23,7 +23,7 @@ import {
   Radio,
   Sparkles
 } from 'lucide-react';
-import UrbanFloodLogo from '../shared/UrbanFloodLogo';
+import HydroSenseLogo from '../shared/HydroSenseLogo';
 
 export const CATEGORIZED_NAV = [
   {
@@ -94,7 +94,7 @@ export default function CitizenSidebar({ isOpen, onClose }) {
         {/* Top Header & Branding */}
         <div>
           <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-            <UrbanFloodLogo variant="full" onClick={onClose} />
+            <HydroSenseLogo variant="full" onClick={onClose} />
 
             {/* Close button for mobile */}
             <button 

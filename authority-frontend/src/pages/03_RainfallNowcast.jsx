@@ -226,7 +226,7 @@ export default function RainfallNowcast() {
             </span>
           </div>
           <p className="text-xs text-ink-secondary mt-0.5">
-            IMD Colaba S-Band Radar (3.0 GHz) • 250m Resolution Convective Cell Tracking • MCGM Urban Flood Command
+            IMD Colaba S-Band Radar (3.0 GHz) • 250m Resolution Convective Cell Tracking • HydroSense Command
           </p>
         </div>
 

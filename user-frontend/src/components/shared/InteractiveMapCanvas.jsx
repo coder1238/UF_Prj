@@ -49,6 +49,9 @@ import {
   CRITICAL_SUBWAYS_DATA 
 } from '../../data/forecastExtraData';
 
+const CARTO_API_KEY = import.meta.env.VITE_CARTO_API_KEY?.trim();
+const OSM_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
 // 5 High-Quality Map Tile Styles
 const TILE_STYLES = {
   carto: {
@@ -59,7 +62,7 @@ const TILE_STYLES = {
       sources: {
         'carto-tiles': {
           type: 'raster',
-          tiles: ['https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'],
+          tiles: [CARTO_API_KEY ? `https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}` : OSM_TILES],
           tileSize: 256,
           attribution: '&copy; OpenStreetMap &copy; CARTO'
         }
@@ -75,7 +78,7 @@ const TILE_STYLES = {
       sources: {
         'dark-tiles': {
           type: 'raster',
-          tiles: ['https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png'],
+          tiles: [CARTO_API_KEY ? `https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}` : OSM_TILES],
           tileSize: 256,
           attribution: '&copy; OpenStreetMap &copy; CARTO Dark'
         }
@@ -465,7 +468,7 @@ export default function InteractiveMapCanvas({
   const { timelineIndex, currentTimeline, currentWard } = useFlood();
   const { navigateTo } = useNavigation();
 
-  const [activeTileStyle, setActiveTileStyle] = useState('carto');
+  const [activeTileStyle, setActiveTileStyle] = useState('osm');
   const [is3D, setIs3D] = useState(false);
   const [activeLayers, setActiveLayers] = useState({
     floodPolygons: true,

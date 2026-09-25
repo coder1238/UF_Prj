@@ -28,6 +28,9 @@ import {
   Ruler,
 } from 'lucide-react';
 
+const CARTO_API_KEY = import.meta.env.VITE_CARTO_API_KEY?.trim();
+const OSM_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
 // Real Tile Providers (Carto Light, OSM Standard, Dark Matter, Satellite Aerial)
 const BASEMAP_STYLES = {
   cartoLight: {
@@ -39,10 +42,9 @@ const BASEMAP_STYLES = {
         'carto-tiles': {
           type: 'raster',
           tiles: [
-            'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-            'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-            'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-            'https://d.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+            ...(CARTO_API_KEY
+              ? ['a', 'b', 'c', 'd'].map((host) => `https://${host}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`)
+              : [OSM_TILES]),
           ],
           tileSize: 256,
           attribution: '&copy; OpenStreetMap &copy; CARTO',
@@ -60,10 +62,9 @@ const BASEMAP_STYLES = {
         'dark-tiles': {
           type: 'raster',
           tiles: [
-            'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-            'https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-            'https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-            'https://d.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+            ...(CARTO_API_KEY
+              ? ['a', 'b', 'c', 'd'].map((host) => `https://${host}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`)
+              : [OSM_TILES]),
           ],
           tileSize: 256,
           attribution: '&copy; OpenStreetMap &copy; CARTO',
@@ -363,7 +364,7 @@ export default function InteractiveMapTwin({
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [selectedBasemap, setSelectedBasemap] = useState('cartoLight');
+  const [selectedBasemap, setSelectedBasemap] = useState('osmStandard');
   const [is3D, setIs3D] = useState(false);
   const [showLayersDropdown, setShowLayersDropdown] = useState(false);
   const [showBasemapDropdown, setShowBasemapDropdown] = useState(false);

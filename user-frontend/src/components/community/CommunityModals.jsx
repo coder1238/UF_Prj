@@ -788,7 +788,7 @@ Key Hotspots:
 ${reports.slice(0, 4).map(r => `• ${r.title}: ${r.depth}cm (${r.category})`).join('\n')}
 
 🛡️ Safe Shelters Open: High-Ground Municipal Centers Active
-📡 Powered by Urban Flood Ground-Truth Network
+📡 Powered by HydroSense Community Network
 Direct Live Map: http://localhost:3000/community`;
 
   const handleCopy = () => {
@@ -1028,4 +1028,3 @@ export function IoTSensorModal({
     </div>
   );
 }
-

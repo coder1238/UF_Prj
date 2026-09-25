@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { ShieldCheck } from 'lucide-react';
 import { useFloodCommand } from '../context/FloodCommandContext';
 
 export default function LoginPage() {
@@ -23,9 +22,9 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen bg-canvas flex items-center justify-center p-6 text-ink">
       <form onSubmit={handleSubmit} className="w-full max-w-md bg-surface border border-border rounded-2xl p-8 shadow-elevated space-y-5">
+        <img src="/branding/hydrosense-logo-full.png" alt="HydroSense" className="mx-auto h-32 w-32 object-contain" />
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-xl bg-purple flex items-center justify-center text-white"><ShieldCheck className="w-6 h-6" /></div>
-          <div><h1 className="text-lg font-bold">Authority Sign In</h1><p className="text-sm text-ink-secondary">Flood Response Command Center</p></div>
+          <div><h1 className="text-lg font-bold">HydroSense Command Sign In</h1><p className="text-sm text-ink-secondary">Municipal flood response center</p></div>
         </div>
         <label className="block text-sm font-semibold">Username
           <input autoComplete="username" required value={username} onChange={(event) => setUsername(event.target.value)} className="mt-1.5 w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-ink outline-none focus:border-purple" />

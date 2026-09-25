@@ -15,7 +15,7 @@ import {
   AlertTriangle,
   Radio
 } from 'lucide-react';
-import UrbanFloodLogo from '../shared/UrbanFloodLogo';
+import HydroSenseLogo from '../shared/HydroSenseLogo';
 import { WARDS_DATA } from '../../data/floodData';
 
 export default function TopHeader({ onToggleSidebar }) {
@@ -67,7 +67,7 @@ export default function TopHeader({ onToggleSidebar }) {
       case '/replay': return 'Historical Cloudburst Event Replay';
       case '/models': return '15-Model AI & Simulation Architecture Hub';
       case '/profile': return 'Vehicle Clearance & Profile Preferences';
-      default: return 'Urban Flood Intelligence';
+      default: return 'HydroSense';
     }
   };
 
@@ -139,10 +139,10 @@ export default function TopHeader({ onToggleSidebar }) {
 
           {/* Compact brand logo visible on mobile/tablet */}
           <div className="lg:hidden shrink-0 sm:hidden">
-            <UrbanFloodLogo variant="icon-only" size="sm" showBadge={false} />
+            <HydroSenseLogo variant="icon-only" size="sm" showBadge={false} />
           </div>
           <div className="hidden sm:block lg:hidden shrink-0">
-            <UrbanFloodLogo variant="compact" size="sm" showBadge={false} />
+            <HydroSenseLogo variant="compact" size="sm" showBadge={false} />
           </div>
 
           <div className="hidden lg:block">

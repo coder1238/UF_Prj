@@ -114,31 +114,10 @@ export default function NavigationRail({ isOpen = false, onClose = () => {} }) {
           to="/command"
           className="p-4 border-b border-border flex items-center gap-3 block hover:bg-surface-secondary/50 transition-colors flex-shrink-0"
         >
-          {/* Custom geometric water contour logo */}
-          <div className="w-9 h-9 rounded-lg bg-purple flex items-center justify-center text-white shadow-subtle flex-shrink-0">
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path
-                d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M12 7v5l3 3"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="12" cy="14" r="2" fill="currentColor" />
-            </svg>
-          </div>
+          <img src="/branding/hydrosense-icon.png" alt="" aria-hidden="true" className="w-9 h-9 object-contain flex-shrink-0" />
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-bold text-[15px] tracking-tight text-ink">UrbanFlood</span>
+              <span className="font-bold text-[15px] tracking-tight text-ink">HydroSense</span>
               <span className="text-[10px] bg-purple-soft text-purple-deep px-1.5 py-0.5 rounded font-mono font-semibold">
                 CMD
               </span>

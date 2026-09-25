@@ -27,7 +27,7 @@ import ProfileSettings from './components/pages/15_ProfileSettings';
 import AIModelTransparency from './components/pages/16_AIModelTransparency';
 
 import { ShieldCheck, PhoneCall, Cpu } from 'lucide-react';
-import UrbanFloodLogo from './components/shared/UrbanFloodLogo';
+import HydroSenseLogo from './components/shared/HydroSenseLogo';
 import Landing from './pages/Landing';
 
 function AppLayout() {
@@ -112,7 +112,7 @@ function AppLayout() {
         <footer className="bg-white border-t border-slate-200/80 py-8 px-4 sm:px-6 lg:px-8 mt-12">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-muted">
             <div className="flex items-center gap-4">
-              <UrbanFloodLogo variant="compact" size="sm" showBadge={false} />
+              <HydroSenseLogo variant="compact" size="sm" showBadge={false} />
               <span className="hidden sm:inline text-slate-300">|</span>
               <span className="text-emerald-700 flex items-center gap-1 font-semibold">
                 <ShieldCheck className="w-3.5 h-3.5" /> 15 AI & Hydro Models Online

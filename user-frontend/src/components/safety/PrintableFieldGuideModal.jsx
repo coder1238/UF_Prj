@@ -139,7 +139,7 @@ export default function PrintableFieldGuideModal({ isOpen, onClose }) {
 
           {/* Footnote */}
           <div className="pt-2 text-[10px] font-mono text-slate-500 border-t border-slate-200 flex justify-between items-center">
-            <span>Urban Flood Intelligence System • Municipal Disaster Preparedness</span>
+            <span>HydroSense • Municipal Disaster Preparedness</span>
             <span>Print or laminate this page before monsoon season</span>
           </div>
         </div>
@@ -147,4 +147,3 @@ export default function PrintableFieldGuideModal({ isOpen, onClose }) {
     </div>
   );
 }
-

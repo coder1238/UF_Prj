@@ -12,7 +12,7 @@ export default function UltraPowerSaverModal({ isOpen, onClose, isPowerSaver, on
 
   const handleDownloadVault = () => {
     const offlinePackage = {
-      title: 'MUMBAI URBAN FLOOD CITIZEN OFFLINE DISASTER VAULT',
+      title: 'HYDROSENSE CITIZEN OFFLINE DISASTER VAULT',
       generatedAt: new Date().toISOString(),
       city: 'Mumbai, Maharashtra',
       criticalHelplines: [
@@ -134,4 +134,3 @@ export default function UltraPowerSaverModal({ isOpen, onClose, isPowerSaver, on
     </div>
   );
 }
-

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Activity, ArrowRight, BellRing, MapPinned, Navigation, Radio, UsersRound } from 'lucide-react';
-import UrbanFloodLogo from '../components/shared/UrbanFloodLogo';
 
 const capabilities = [
   { icon: MapPinned, title: 'See flood risk live', text: 'Explore ward-level water and risk information on the city map.' },
@@ -13,7 +12,7 @@ export default function Landing({ onEnter }) {
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas text-ink">
       <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-5 sm:px-8">
-        <UrbanFloodLogo size="md" />
+        <img src="/branding/hydrosense-logo-full.png" alt="HydroSense" className="h-28 w-28 object-contain" />
         <span className="hidden rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-ink-secondary sm:inline-flex sm:items-center sm:gap-2"><span className="h-2 w-2 rounded-full bg-flood-safe" /> Flood-aware city companion</span>
       </header>
 
@@ -45,7 +44,7 @@ export default function Landing({ onEnter }) {
 
       <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-16"><div className="mb-5 text-center"><h2 className="text-xl font-extrabold">Platform at a glance</h2><p className="mt-1 text-xs text-ink-muted">Product capabilities and coverage, not live telemetry.</p></div><div className="grid gap-4 sm:grid-cols-3">{[['7', 'ward areas represented'], ['3', 'voice guidance languages'], ['Live', 'map and alert updates']].map(([value, label]) => <div key={label} className="rounded-2xl border border-border bg-surface p-5 text-center sm:p-6"><p className="text-3xl font-extrabold text-primary">{value}</p><p className="mt-1 text-sm font-medium text-ink-secondary">{label}</p></div>)}</div></section>
 
-      <footer className="border-t border-border bg-surface px-5 py-6 text-center text-xs leading-5 text-ink-muted sm:px-8">Urban Flood Intelligence — built to keep commuters, families, and first responders safer during monsoon flooding.</footer>
+      <footer className="border-t border-border bg-surface px-5 py-6 text-center text-xs leading-5 text-ink-muted sm:px-8">HydroSense — helping commuters, families, and first responders make safer decisions during monsoon flooding.</footer>
     </main>
   );
 }

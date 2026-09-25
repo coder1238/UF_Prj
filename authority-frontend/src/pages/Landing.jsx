@@ -1,6 +1,6 @@
 import React from 'react';
 import { Activity, ArrowRight, Building2, ClipboardCheck, RadioTower, ShieldCheck, Truck } from 'lucide-react';
-import UrbanFloodCommandLogo from '../components/shared/UrbanFloodCommandLogo';
+import HydroSenseCommandLogo from '../components/shared/HydroSenseCommandLogo';
 
 const capabilities = [
   { icon: Activity, title: 'City-wide flood monitoring', text: 'Review ward conditions, rainfall nowcasts, drainage networks, and mapped hotspots.' },
@@ -12,7 +12,7 @@ const capabilities = [
 export default function Landing({ onEnter }) {
   return (
     <main className="min-h-screen overflow-x-hidden bg-canvas text-ink">
-      <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-5 sm:px-8"><UrbanFloodCommandLogo /><span className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-ink-secondary sm:inline-flex"><RadioTower className="h-4 w-4 text-purple" /> Municipal response platform</span></header>
+      <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-5 sm:px-8"><HydroSenseCommandLogo /><span className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-ink-secondary sm:inline-flex"><RadioTower className="h-4 w-4 text-purple" /> Municipal response platform</span></header>
 
       <section className="mx-auto grid w-full max-w-7xl items-center gap-10 px-5 pb-16 pt-10 sm:px-8 sm:pb-24 sm:pt-16 lg:grid-cols-[1.05fr_.95fr] lg:gap-16 lg:pt-20">
         <div>
@@ -31,7 +31,7 @@ export default function Landing({ onEnter }) {
 
       <section className="border-y border-border bg-surface py-16 sm:py-20"><div className="mx-auto max-w-7xl px-5 sm:px-8"><div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-widest text-purple">Operational capabilities</p><h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">Built for coordinated response</h2><p className="mt-3 text-ink-secondary">A shared operational view for monitoring conditions and organizing response work.</p></div><div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{capabilities.map(({ icon: Icon, title, text }) => <article key={title} className="rounded-2xl border border-border bg-canvas p-5 sm:p-6"><div className="flex h-11 w-11 items-center justify-center rounded-xl bg-purple-soft text-purple"><Icon className="h-5 w-5" /></div><h3 className="mt-4 font-bold">{title}</h3><p className="mt-2 text-sm leading-6 text-ink-secondary">{text}</p></article>)}</div></div></section>
 
-      <footer className="border-t border-border bg-surface px-5 py-6 text-center text-xs leading-5 text-ink-muted sm:px-8">UrbanFlood Command — a unified operations layer for municipal flood response.</footer>
+      <footer className="border-t border-border bg-surface px-5 py-6 text-center text-xs leading-5 text-ink-muted sm:px-8">HydroSense Command — a unified operations layer for municipal flood response.</footer>
     </main>
   );
 }

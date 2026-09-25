@@ -108,15 +108,10 @@ export default function TopNavBar() {
             to="/"
             className="flex items-center gap-2.5 text-left group"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center text-white shadow-card group-hover:scale-105 transition">
-              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2L4 7v6c0 5 4 9 8 9s8-4 8-9V7l-8-5z" />
-                <path d="M12 11c-1.5 0-2.5 1-2.5 2.5s1 2.5 2.5 2.5 2.5-1 2.5-2.5-1-2.5-2.5-2.5z" fill="currentColor" fillOpacity="0.4" />
-              </svg>
-            </div>
+            <img src="/branding/hydrosense-icon.png" alt="" aria-hidden="true" className="w-10 h-10 object-contain group-hover:scale-105 transition" />
             <div>
               <div className="font-extrabold text-base tracking-tight text-ink flex items-center gap-1.5">
-                URBAN FLOOD INTELLIGENCE
+                HydroSense
               </div>
               <div className="text-[11px] text-ink-muted font-medium">
                 Know the water before you meet it.

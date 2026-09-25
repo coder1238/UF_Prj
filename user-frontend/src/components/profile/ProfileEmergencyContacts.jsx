@@ -37,7 +37,7 @@ export default function ProfileEmergencyContacts({
   };
 
   const handleSimulatePing = (contact) => {
-    const message = `[EMERGENCY SOS] Urgent Flood Warning: I am in ${userWardName}. Current location beacon sent. Live coordinates available on Urban Flood Portal.`;
+    const message = `[EMERGENCY SOS] Urgent Flood Warning: I am in ${userWardName}. Current location beacon sent. Live coordinates available on HydroSense Citizen Portal.`;
     setSimulatedPingSent({ contact: contact.name, phone: contact.phone, message });
     speakAlert(`Simulated emergency SOS SMS sent to ${contact.name}`);
     setTimeout(() => {
@@ -241,4 +241,3 @@ export default function ProfileEmergencyContacts({
     </div>
   );
 }
-

@@ -1,4 +1,4 @@
-// Comprehensive Operational Geospatial & Telemetry Dataset for UrbanFlood Command (Mumbai Metro)
+// Comprehensive operational geospatial and telemetry dataset for HydroSense Command (Mumbai Metro)
 
 export const WARDS = [
   {
@@ -1342,5 +1342,4 @@ export const INITIAL_COMMAND_LOGS = [
     status: 'ACTIVE_BROADCAST',
   },
 ];
-
 

@@ -1,4 +1,4 @@
-# Flood Response & Safe Mobility API
+# HydroSense Backend API
 
 FastAPI backend for a Mumbai ward scale proof of concept.
 

@@ -9,18 +9,21 @@ import {
 } from 'lucide-react';
 import { GNN_RUNOFF_ZONES_GEOJSON } from '../../data/communityData';
 
+const CARTO_API_KEY = import.meta.env.VITE_CARTO_API_KEY?.trim();
+const OSM_TILES = ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'];
+
 // 4 High-Resolution Map Tile Basemap Styles
 const BASEMAP_STYLES = {
   carto: {
     id: 'carto',
     name: 'Carto Clean',
-    tiles: ['https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'],
+    tiles: CARTO_API_KEY ? [`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`] : OSM_TILES,
     attribution: '&copy; OpenStreetMap &copy; CARTO'
   },
   dark: {
     id: 'dark',
     name: 'Tactical Dark',
-    tiles: ['https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png'],
+    tiles: CARTO_API_KEY ? [`https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`] : OSM_TILES,
     attribution: '&copy; OpenStreetMap &copy; CARTO Dark'
   },
   satellite: {
@@ -81,7 +84,7 @@ export default function CommunityMapCanvas({
   const markersRef = useRef([]);
   const measureMarkersRef = useRef([]);
 
-  const [activeBasemap, setActiveBasemap] = useState('carto');
+  const [activeBasemap, setActiveBasemap] = useState('osm');
   const [mapPitch, setMapPitch] = useState(0);
   const [mapBearing, setMapBearing] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -868,4 +871,3 @@ export default function CommunityMapCanvas({
     </div>
   );
 }
-

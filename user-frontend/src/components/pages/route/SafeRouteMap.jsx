@@ -22,6 +22,9 @@ import {
 } from 'lucide-react';
 import { ROUTE_CORRIDORS, ROUTE_SAFE_HAVENS, ROUTE_BARRICADES, ROUTE_SENSOR_TELEMETRY } from '../../../data/routePresetsData';
 
+const CARTO_API_KEY = import.meta.env.VITE_CARTO_API_KEY?.trim();
+const OSM_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
 // 4 High-Reliability Basemap Tile Styles
 const TILE_STYLES = {
   carto: {
@@ -32,7 +35,7 @@ const TILE_STYLES = {
       sources: {
         'carto-tiles': {
           type: 'raster',
-          tiles: ['https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'],
+          tiles: [CARTO_API_KEY ? `https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}` : OSM_TILES],
           tileSize: 256,
           attribution: '&copy; OpenStreetMap &copy; CARTO'
         }
@@ -48,7 +51,7 @@ const TILE_STYLES = {
       sources: {
         'dark-tiles': {
           type: 'raster',
-          tiles: ['https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png'],
+          tiles: [CARTO_API_KEY ? `https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}` : OSM_TILES],
           tileSize: 256,
           attribution: '&copy; OpenStreetMap &copy; CARTO Dark'
         }
@@ -147,7 +150,7 @@ export default function SafeRouteMap({
   const popupRef = useRef(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
-  const [activeTileStyle, setActiveTileStyle] = useState('carto');
+  const [activeTileStyle, setActiveTileStyle] = useState('osm');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [hoveredPointInfo, setHoveredPointInfo] = useState(null);
   const [is3DMode, setIs3DMode] = useState(false);
@@ -652,4 +655,3 @@ export default function SafeRouteMap({
     </div>
   );
 }
-

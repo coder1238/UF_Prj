@@ -18,11 +18,11 @@ export default function OfflineRouteExporter({
     }).join('\n');
 
     const gpxData = `<?xml version="1.0" encoding="UTF-8"?>
-<gpx version="1.1" creator="UrbanFloodCitizenIntelligence" xmlns="http://www.topografix.com/GPX/1/1">
+<gpx version="1.1" creator="HydroSense Citizen" xmlns="http://www.topografix.com/GPX/1/1">
   <metadata>
     <name>Safe Flood Route - ${activeCorridor.name}</name>
     <desc>Flood-aware evacuation and transit route corridor calibrated for Mumbai Monsoons</desc>
-    <author><name>BMC Urban Flood Mobility Engine</name></author>
+    <author><name>HydroSense Citizen Mobility</name></author>
   </metadata>
   <trk>
     <name>${activeCorridor.name}</name>
