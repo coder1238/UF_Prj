@@ -1,0 +1,28 @@
+# Place this file at the ROOT of your repo (same level as README.md).
+# It documents/configures the Render static sites so deep links like
+# /route, /command, /map etc. don't 404 or show blank on direct load
+# or refresh. Adjust names/branch/buildCommand to match your existing
+# Render services if they differ.
+
+services:
+  - type: web
+    runtime: static
+    name: urban-flood-users        # user-frontend (citizen app)
+    rootDir: user-frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  - type: web
+    runtime: static
+    name: urban-flood-authority     # authority-frontend
+    rootDir: authority-frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
