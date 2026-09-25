@@ -49,9 +49,9 @@ export default function HomeSafetyOverview() {
   const tideMins = Math.floor(tideSecondsLeft / 60);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto px-4 py-6">
+    <div className="mx-auto max-w-7xl space-y-7 px-4 py-6 sm:px-5 lg:py-8">
       {/* 1. Top Banner Alert Bar (With Dynamic Tide & Interactive Triggers) */}
-      <div className="bg-gradient-to-r from-primary-deep via-primary to-primary-deep rounded-2xl p-4 text-white shadow-elevated flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-primary-deep via-primary to-primary-deep rounded-2xl p-5 text-white shadow-elevated flex flex-col md:flex-row items-center justify-between gap-4 lg:px-6">
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20">
             <Activity className="w-5 h-5 text-white animate-pulse" />
@@ -88,27 +88,27 @@ export default function HomeSafetyOverview() {
       </div>
 
       {/* 2. Hero Section: Asymmetric Split Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
         {/* Left Column (5 Cols): Value Proposition, Personal Safety & Flood Clock */}
-        <div className="lg:col-span-5 space-y-5">
+        <div className="lg:col-span-5 space-y-6">
           {/* Main Headline Block */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-soft text-primary-deep text-xs font-mono font-bold">
               <Sparkles className="w-3.5 h-3.5 text-primary" />
               CITIZEN FLOOD INTELLIGENCE & NOWCASTING
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-[2.75rem] font-extrabold text-ink tracking-[-0.04em] leading-[1.08]">
               Know the water <br />
               <span className="text-primary">before you meet it.</span>
             </h1>
 
-            <p className="text-sm text-ink-secondary leading-relaxed">
+            <p className="max-w-xl text-sm text-ink-secondary leading-7">
               Street-level flood forecasts, safer routes, and hyper-local warnings for the next three hours. Powered by real-time Doppler radar nowcasting and drainage simulations.
             </p>
 
             {/* Primary Action Buttons */}
-            <div className="pt-2 flex flex-wrap items-center gap-3">
+            <div className="pt-1 flex flex-wrap items-center gap-3">
               <button 
                 onClick={() => setActivePage('map')}
                 className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-hover transition shadow-card flex items-center gap-2"

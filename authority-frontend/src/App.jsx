@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { FloodCommandProvider } from './context/FloodCommandContext';
 import NavigationRail from './components/layout/NavigationRail';
 import TopUtilityBar from './components/layout/TopUtilityBar';
@@ -25,28 +25,27 @@ import InterventionLab from './pages/16_InterventionLab';
 import CCTVSensorAssimilation from './pages/17_CCTVSensorAssimilation';
 import CitizenPortalView from './pages/18_CitizenPortalView';
 import LoginPage from './pages/00_Login';
-import { useFloodCommand } from './context/FloodCommandContext';
-import Landing from './pages/Landing';
 
 function AppShell() {
   const location = useLocation();
-  const { authToken } = useFloodCommand();
+  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [hasEntered, setHasEntered] = useState(() => {
-    try { return window.sessionStorage.getItem('ufc_entered') === 'true'; }
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    try { return window.sessionStorage.getItem('hydrosense_auth') === 'true'; }
     catch { return false; }
   });
   const isCitizenView = location.pathname === '/citizen-view';
 
-  const enterApp = () => {
-    try { window.sessionStorage.setItem('ufc_entered', 'true'); } catch { /* Continue for this page view if storage is unavailable. */ }
-    setHasEntered(true);
+  const signIn = () => {
+    try { window.sessionStorage.setItem('hydrosense_auth', 'true'); } catch { /* Keep the demo usable for this page view. */ }
+    setIsAuthenticated(true);
+    navigate('/command', { replace: true });
   };
 
-  if (!hasEntered) return <Landing onEnter={enterApp} />;
-
-  if (location.pathname === '/login') return authToken ? <Navigate to="/command" replace /> : <LoginPage />;
-  if (!authToken && !isCitizenView) return <Navigate to="/login" replace />;
+  if (location.pathname === '/login') {
+    return isAuthenticated ? <Navigate to="/command" replace /> : <LoginPage onSignIn={signIn} />;
+  }
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
     <div className="flex h-screen w-screen min-w-0 overflow-hidden bg-canvas text-ink font-sans antialiased">

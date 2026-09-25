@@ -1,42 +1,65 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useFloodCommand } from '../context/FloodCommandContext';
 
-export default function LoginPage() {
-  const { login, authToken } = useFloodCommand();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  if (authToken) return <Navigate to="/command" replace />;
+export default function LoginPage({ onSignIn }) {
+  const [username, setUsername] = useState('operator1');
+  const [password, setPassword] = useState('demo1234');
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    setError('');
-    setIsSubmitting(true);
-    const result = await login(username, password);
-    setIsSubmitting(false);
-    if (!result.success) setError(result.error || 'Unable to sign in. Check your credentials and try again.');
+    onSignIn();
   };
 
   return (
-    <main className="min-h-screen bg-canvas flex items-center justify-center p-6 text-ink">
-      <form onSubmit={handleSubmit} className="w-full max-w-md bg-surface border border-border rounded-2xl p-8 shadow-elevated space-y-5">
-        <img src="/branding/hydrosense-logo-full.png" alt="HydroSense" className="mx-auto h-32 w-32 object-contain" />
-        <div className="flex items-center gap-3">
-          <div><h1 className="text-lg font-bold">HydroSense Command Sign In</h1><p className="text-sm text-ink-secondary">Municipal flood response center</p></div>
+    <main className="flex min-h-screen items-center justify-center bg-canvas px-5 py-10 font-sans text-ink">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md space-y-6 rounded-2xl border border-border bg-surface p-7 shadow-elevated sm:p-9"
+      >
+        <div className="space-y-3 text-center">
+          <img
+            src="/branding/hydrosense-logo-full.png"
+            alt="HydroSense"
+            className="mx-auto h-28 w-56 object-contain"
+          />
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Authority sign in</h1>
+            <p className="mt-1 text-sm text-ink-secondary">Municipal flood response command</p>
+          </div>
         </div>
-        <label className="block text-sm font-semibold">Username
-          <input autoComplete="username" required value={username} onChange={(event) => setUsername(event.target.value)} className="mt-1.5 w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-ink outline-none focus:border-purple" />
-        </label>
-        <label className="block text-sm font-semibold">Password
-          <input type="password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} className="mt-1.5 w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-ink outline-none focus:border-purple" />
-        </label>
-        {error && <p role="alert" className="rounded-lg bg-status-alert-soft px-3 py-2 text-sm text-status-alert">{error}</p>}
-        <button disabled={isSubmitting} type="submit" className="w-full rounded-lg bg-purple px-4 py-2.5 font-bold text-white transition-colors hover:bg-purple-deep disabled:opacity-60">
-          {isSubmitting ? 'Signing in…' : 'Sign in'}
-        </button>
-        <p className="text-xs text-ink-muted">Demo operator: operator1 / demo1234</p>
+
+        <div className="space-y-4">
+          <label className="block space-y-1.5 text-sm font-semibold">
+            <span>Username</span>
+            <input
+              autoComplete="username"
+              required
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              className="w-full rounded-lg border border-border bg-surface px-3.5 py-3 text-ink outline-none transition focus:border-purple focus:ring-2 focus:ring-purple/20"
+            />
+          </label>
+          <label className="block space-y-1.5 text-sm font-semibold">
+            <span>Password</span>
+            <input
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              className="w-full rounded-lg border border-border bg-surface px-3.5 py-3 text-ink outline-none transition focus:border-purple focus:ring-2 focus:ring-purple/20"
+            />
+          </label>
+        </div>
+
+        <div className="space-y-3">
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-purple px-4 py-3 text-sm font-bold text-white shadow-subtle transition hover:bg-purple-deep focus:outline-none focus:ring-2 focus:ring-purple/30 focus:ring-offset-2"
+          >
+            Sign In
+          </button>
+          <p className="text-center text-xs text-ink-muted">Demo credentials pre-filled — just click Sign In</p>
+        </div>
       </form>
     </main>
   );

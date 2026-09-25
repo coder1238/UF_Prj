@@ -124,7 +124,7 @@ export default function CommandCenter() {
   const currentThreat = THREAT_LEVELS.find((t) => t.code === threatLevel) || THREAT_LEVELS[3];
 
   return (
-    <div className="p-4 lg:p-5 flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-64px)] select-none">
+    <div className="p-4 lg:p-6 flex flex-col gap-5 overflow-y-auto max-h-[calc(100vh-64px)] select-none">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-20 right-6 z-50 bg-ink text-white px-4 py-2.5 rounded-xl shadow-elevated border border-border/30 text-xs font-mono flex items-center gap-2 animate-bounce">
@@ -132,6 +132,17 @@ export default function CommandCenter() {
           <span>{toastMessage}</span>
         </div>
       )}
+
+      <section className="flex flex-wrap items-end justify-between gap-3 px-1 pt-1" aria-labelledby="command-center-title">
+        <div className="space-y-1.5">
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-purple">HydroSense · Municipal Operations</p>
+          <h1 id="command-center-title" className="text-2xl font-bold tracking-tight text-ink sm:text-[28px]">Command Center</h1>
+          <p className="max-w-2xl text-xs leading-relaxed text-ink-secondary sm:text-sm">Live flood conditions, ward priorities, and response actions in one operational view.</p>
+        </div>
+        <div className="mb-0.5 inline-flex items-center gap-2 rounded-full border border-status-safe/20 bg-status-safe-soft px-3 py-1.5 text-[11px] font-semibold text-status-safe">
+          <span className="h-2 w-2 rounded-full bg-status-safe" /> Live monitoring active
+        </div>
+      </section>
 
       {/* ========================================================================= */}
       {/* 1. MUNICIPAL THREAT LEVEL & FEATURE QUICK LAUNCH STRIP                     */}
