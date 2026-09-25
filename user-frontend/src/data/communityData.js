@@ -1,0 +1,740 @@
+// Comprehensive community datasets for Community Flood Intelligence Center
+// Real Mumbai hotspot coordinates, IoT sensor telemetry, mutual aid, and shelters
+
+export const INITIAL_COMMUNITY_OBSERVATIONS = [
+  {
+    id: 'CMD-4091',
+    title: 'Kurla West (L.B.S. Marg Subway & Station Rd)',
+    location: 'L.B.S. Marg, Under Kurla West Rail Culvert',
+    wardId: 'ward-l',
+    wardName: 'Ward L (Kurla)',
+    type: 'Waterlogging',
+    category: 'Waterlogging',
+    timestamp: '8m ago (20:34 IST)',
+    timeAgo: '8m ago',
+    recencyMinutes: 8,
+    depth: 34,
+    modelDepth: 32,
+    scoutDepth: 35,
+    sensorDepth: 33.8,
+    sensorId: 'ULTRASONIC-KW-09',
+    agreementPct: 97,
+    scoutName: 'Aarav Mehta',
+    trustTier: 'Level 4 Citizen Scout (24 verified)',
+    upvotes: 28,
+    downvotes: 1,
+    userConfirmed: false,
+    userDisputed: false,
+    verified: true,
+    description: 'Rapid stormwater runoff accumulation exceeding 30 cm under rail bridge. Multiple low-slung hatchbacks stalling. Traffic diverted to CST road.',
+    hazards: ['Fast Current', 'Subway Trap', 'Stalled Auto'],
+    coordinates: { lat: 19.0682, lng: 72.8791 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 20:31:14 IST',
+      device: 'iPhone 15 Pro (Dual GPS L1+L5)',
+      accuracyMeters: 2.8,
+      tamperProofHash: 'sha256:7e91ac48d0bfa81e',
+      aiWaterlineDetected: true,
+      aiTireSubmersionPct: 62
+    },
+    comments: [
+      { id: 'c1', author: 'Vikram S.', time: '6m ago', text: 'BMC pump trailer #4 just turned onto LBS Marg from Kurla depot.', verified: true },
+      { id: 'c2', author: 'Sneha P.', time: '3m ago', text: 'Do NOT try the bypass alley, water is even deeper there near the nullah.', verified: false }
+    ],
+    status: 'VERIFIED_MATCH'
+  },
+  {
+    id: 'CMD-4088',
+    title: 'Milan Subway (SV Road, Santacruz)',
+    location: 'SV Road Approach, Milan Rail Underpass',
+    wardId: 'ward-k-west',
+    wardName: 'Ward K-West (Andheri/Santacruz)',
+    type: 'Waterlogging',
+    category: 'Waterlogging',
+    timestamp: '14m ago (20:28 IST)',
+    timeAgo: '14m ago',
+    recencyMinutes: 14,
+    depth: 42,
+    modelDepth: 40,
+    scoutDepth: 44,
+    sensorDepth: 41.5,
+    sensorId: 'ULTRASONIC-MS-12',
+    agreementPct: 98,
+    scoutName: 'Rohan Deshmukh',
+    trustTier: 'Level 5 Senior Sentinel (48 verified)',
+    upvotes: 45,
+    downvotes: 0,
+    userConfirmed: true,
+    userDisputed: false,
+    verified: true,
+    description: 'Critical inundation depth. Underpass is officially cordoned off by Mumbai Traffic Police. 1 BEST bus stuck at entry dip.',
+    hazards: ['Critical Depth >40cm', 'Underpass Closed', 'Stalled Bus'],
+    coordinates: { lat: 19.0825, lng: 72.8415 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 20:25:02 IST',
+      device: 'Pixel 8 Pro (Centimeter RTK)',
+      accuracyMeters: 1.9,
+      tamperProofHash: 'sha256:b3d9021e847a9fc2',
+      aiWaterlineDetected: true,
+      aiTireSubmersionPct: 85
+    },
+    comments: [
+      { id: 'c3', author: 'Traffic Marshal K.', time: '11m ago', text: 'Use Milan Flyover overhead! Keep right lane moving.', verified: true }
+    ],
+    status: 'CORDONED_VERIFIED'
+  },
+  {
+    id: 'CMD-4085',
+    title: 'Hindmata Flyover Underpass & Cinema Junction',
+    location: 'Dr. Ambedkar Road, Dadar East',
+    wardId: 'ward-f-north',
+    wardName: 'Ward F-North (Dadar/Matunga)',
+    type: 'Waterlogging',
+    category: 'Waterlogging',
+    timestamp: '22m ago (20:20 IST)',
+    timeAgo: '22m ago',
+    recencyMinutes: 22,
+    depth: 28,
+    modelDepth: 30,
+    scoutDepth: 28,
+    sensorDepth: 29.1,
+    sensorId: 'ULTRASONIC-HM-03',
+    agreementPct: 96,
+    scoutName: 'Priya Nambiar',
+    trustTier: 'Level 3 Aqua Scout (14 verified)',
+    upvotes: 32,
+    downvotes: 2,
+    userConfirmed: false,
+    userDisputed: false,
+    verified: true,
+    description: 'Underground holding tanks operating at 80% capacity. Surface runoff 28 cm deep near bus stop. Flyover lanes above are completely dry and moving.',
+    hazards: ['Flyover Recommended', 'Shop Ingress Risk'],
+    coordinates: { lat: 19.0142, lng: 72.8428 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 20:18:40 IST',
+      device: 'Samsung S24 Ultra',
+      accuracyMeters: 3.1,
+      tamperProofHash: 'sha256:4f18d79a0912bcde',
+      aiWaterlineDetected: true,
+      aiTireSubmersionPct: 54
+    },
+    comments: [
+      { id: 'c4', author: 'Dadar Residents Group', time: '15m ago', text: 'Pramod Mahajan park holding tanks are pumping steadily.', verified: true }
+    ],
+    status: 'VERIFIED_MATCH'
+  },
+  {
+    id: 'CMD-4081',
+    title: 'Dislodged Stormwater Manhole with Severe Vortex',
+    location: '14th Road Junction & Khar Danda Rd, Khar West',
+    wardId: 'ward-h-west',
+    wardName: 'Ward H-West (Bandra/Khar)',
+    type: 'Open Manhole',
+    category: 'Open Manhole',
+    timestamp: '31m ago (20:11 IST)',
+    timeAgo: '31m ago',
+    recencyMinutes: 31,
+    depth: 22,
+    modelDepth: 0,
+    scoutDepth: 22,
+    sensorDepth: 0,
+    sensorId: 'FIELD-SCOUT-BEACON',
+    agreementPct: 100,
+    scoutName: 'Pooja Iyer',
+    trustTier: 'Level 5 Senior Sentinel (52 verified)',
+    upvotes: 68,
+    downvotes: 0,
+    userConfirmed: true,
+    userDisputed: false,
+    verified: true,
+    description: 'High-hazard situation! High suction water vortex pulling inwards around missing circular storm drain cover. Red warning flag and plastic drum planted by locals.',
+    hazards: ['Open Manhole', 'Suction Vortex', 'Pedestrian Hazard'],
+    coordinates: { lat: 19.0710, lng: 72.8360 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 20:09:12 IST',
+      device: 'iPhone 14 Pro',
+      accuracyMeters: 2.1,
+      tamperProofHash: 'sha256:cc98014ba730fe91',
+      aiWaterlineDetected: true,
+      aiTireSubmersionPct: 40
+    },
+    comments: [
+      { id: 'c5', author: 'Khar Safety Volunteer', time: '20m ago', text: 'Barricade placed around vortex! Ward crew notified via SOS.', verified: true }
+    ],
+    status: 'CORDONED_VERIFIED'
+  },
+  {
+    id: 'CMD-4076',
+    title: 'Submerged Electrical Junction Pillar / Sparking Cable',
+    location: 'Near Bandra Talao Western Side, SV Road, Bandra',
+    wardId: 'ward-h-west',
+    wardName: 'Ward H-West (Bandra/Khar)',
+    type: 'Electrical Hazard',
+    category: 'Electrical Hazard',
+    timestamp: '45m ago (19:57 IST)',
+    timeAgo: '45m ago',
+    recencyMinutes: 45,
+    depth: 18,
+    modelDepth: 16,
+    scoutDepth: 18,
+    sensorDepth: 17.5,
+    sensorId: 'ULTRASONIC-BT-01',
+    agreementPct: 95,
+    scoutName: 'Farhan Qureshi',
+    trustTier: 'Level 4 Citizen Scout (29 verified)',
+    upvotes: 54,
+    downvotes: 0,
+    userConfirmed: true,
+    userDisputed: false,
+    verified: true,
+    description: 'High risk of electrocution! Water has risen to base plate of municipal lighting transformer with intermittent sparking. BEST control room remotely isolater breaker.',
+    hazards: ['Electrical Sparking', 'Electrocution Risk', 'Cordon Active'],
+    coordinates: { lat: 19.0550, lng: 72.8380 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 19:54:10 IST',
+      device: 'OnePlus 12',
+      accuracyMeters: 3.5,
+      tamperProofHash: 'sha256:d82910fa3c11e742',
+      aiWaterlineDetected: true,
+      aiTireSubmersionPct: 35
+    },
+    comments: [
+      { id: 'c6', author: 'BEST Support Cell', time: '35m ago', text: 'Feeder breaker #B-19 successfully tripped. Power cut off safely.', verified: true }
+    ],
+    status: 'VERIFIED_MATCH'
+  },
+  {
+    id: 'CMD-4071',
+    title: 'Saki Naka Junction Under Metro Station',
+    location: 'Andheri-Kurla Rd, Beneath Saki Naka Metro Gate 2',
+    wardId: 'ward-l',
+    wardName: 'Ward L (Kurla)',
+    type: 'Waterlogging',
+    category: 'Waterlogging',
+    timestamp: '52m ago (19:50 IST)',
+    timeAgo: '52m ago',
+    recencyMinutes: 52,
+    depth: 16,
+    modelDepth: 15,
+    scoutDepth: 17,
+    sensorDepth: 16.2,
+    sensorId: 'ULTRASONIC-SN-41',
+    agreementPct: 96,
+    scoutName: 'Sanjay Chawla',
+    trustTier: 'Level 2 Scout (8 verified)',
+    upvotes: 19,
+    downvotes: 1,
+    userConfirmed: false,
+    userDisputed: false,
+    verified: true,
+    description: 'Moderate ponding across outer two lanes. Two-wheelers splashing heavily. Large vehicles moving through with caution.',
+    hazards: ['Ponding', 'Two-Wheeler Slip Risk'],
+    coordinates: { lat: 19.1020, lng: 72.8870 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 19:48:00 IST',
+      device: 'Samsung A54',
+      accuracyMeters: 4.8,
+      tamperProofHash: 'sha256:9123fe49ab31cdef',
+      aiWaterlineDetected: true,
+      aiTireSubmersionPct: 28
+    },
+    comments: [
+      { id: 'c7', author: 'Metro Marshal', time: '40m ago', text: 'Metro entrance escalator #2 operational, dry elevated walkway available.', verified: true }
+    ],
+    status: 'VERIFIED_MATCH'
+  },
+  {
+    id: 'CMD-4066',
+    title: 'Andheri Subway Cordoned (Water Depth 60cm)',
+    location: 'S.V. Road to Western Express Highway Subway, Andheri',
+    wardId: 'ward-k-west',
+    wardName: 'Ward K-West (Andheri/Santacruz)',
+    type: 'Waterlogging',
+    category: 'Waterlogging',
+    timestamp: '1h 10m ago (19:32 IST)',
+    timeAgo: '1h ago',
+    recencyMinutes: 70,
+    depth: 60,
+    modelDepth: 58,
+    scoutDepth: 62,
+    sensorDepth: 60.5,
+    sensorId: 'ULTRASONIC-AS-07',
+    agreementPct: 99,
+    scoutName: 'Aditya Kulkarni',
+    trustTier: 'Level 5 Senior Sentinel (61 verified)',
+    upvotes: 94,
+    downvotes: 0,
+    userConfirmed: true,
+    userDisputed: false,
+    verified: true,
+    description: 'Complete submersion. Flood level reached 60 cm. Traffic barriers padlocked shut by BMC. Automatic dewatering pump #2 and #3 running at full RPM.',
+    hazards: ['Deep Inundation >50cm', 'Subway Completely Impassable', 'Barricades Locked'],
+    coordinates: { lat: 19.1197, lng: 72.8464 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 19:29:12 IST',
+      device: 'iPhone 15 Pro Max',
+      accuracyMeters: 1.8,
+      tamperProofHash: 'sha256:772183eec19b4012',
+      aiWaterlineDetected: true,
+      aiTireSubmersionPct: 100
+    },
+    comments: [
+      { id: 'c8', author: 'BMC Stormwater Engineer', time: '1h ago', text: 'Gokhale bridge above is clear. Divert all east-west traffic via Gokhale Flyover.', verified: true }
+    ],
+    status: 'CORDONED_VERIFIED'
+  },
+  {
+    id: 'CMD-4060',
+    title: 'Fallen Gulmohar Tree Blocking King’s Circle Flyover Off-Ramp',
+    location: 'Sion Southbound Ramp near King’s Circle Station',
+    wardId: 'ward-f-north',
+    wardName: 'Ward F-North (Dadar/Matunga)',
+    type: 'Tree Fall',
+    category: 'Tree Fall',
+    timestamp: '1h 25m ago (19:17 IST)',
+    timeAgo: '1h ago',
+    recencyMinutes: 85,
+    depth: 8,
+    modelDepth: 6,
+    scoutDepth: 8,
+    sensorDepth: 7.2,
+    sensorId: 'ULTRASONIC-KC-02',
+    agreementPct: 94,
+    scoutName: 'Devika Sharma',
+    trustTier: 'Level 3 Aqua Scout (19 verified)',
+    upvotes: 38,
+    downvotes: 1,
+    userConfirmed: false,
+    userDisputed: false,
+    verified: true,
+    description: 'Heavy branches snapped during sudden wind squall, obstructing two lanes. BMC garden department chainsaw team on site cutting limbs.',
+    hazards: ['Fallen Tree', 'Lane Restriction', 'Branch Debris'],
+    coordinates: { lat: 19.0274, lng: 72.8559 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 19:15:02 IST',
+      device: 'Google Pixel 7',
+      accuracyMeters: 3.2,
+      tamperProofHash: 'sha256:32901fabc4558291',
+      aiWaterlineDetected: false,
+      aiTireSubmersionPct: 15
+    },
+    comments: [
+      { id: 'c9', author: 'Traffic Police Post', time: '45m ago', text: 'One lane cleared. Expect 10-15 minute crawl through Matunga.', verified: true }
+    ],
+    status: 'CLEARANCE_CREW_EN_ROUTE'
+  },
+  {
+    id: 'CMD-4054',
+    title: 'Stalled Commercial Tempo in Flooded Chunabhatti Dip',
+    location: 'Eastern Express Highway Chunabhatti Flyover Underpass',
+    wardId: 'ward-l',
+    wardName: 'Ward L (Kurla)',
+    type: 'Stalled Vehicle',
+    category: 'Stalled Vehicle',
+    timestamp: '1h 40m ago (19:02 IST)',
+    timeAgo: '1h 40m ago',
+    recencyMinutes: 100,
+    depth: 36,
+    modelDepth: 34,
+    scoutDepth: 38,
+    sensorDepth: 35.5,
+    sensorId: 'ULTRASONIC-CB-15',
+    agreementPct: 96,
+    scoutName: 'Manish Tandel',
+    trustTier: 'Level 4 Citizen Scout (27 verified)',
+    upvotes: 41,
+    downvotes: 0,
+    userConfirmed: true,
+    userDisputed: false,
+    verified: true,
+    description: 'Diesel delivery tempo hydro-locked with water inside cabin. Driver safe on high pavement. Towing truck dispatched.',
+    hazards: ['Stalled Vehicle', 'Deep Water', 'Traffic Chokepoint'],
+    coordinates: { lat: 19.0531, lng: 72.8710 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 18:59:22 IST',
+      device: 'Moto Edge 40',
+      accuracyMeters: 4.1,
+      tamperProofHash: 'sha256:88190214aebc4921',
+      aiWaterlineDetected: true,
+      aiTireSubmersionPct: 70
+    },
+    comments: [
+      { id: 'c10', author: 'Highway Patrol', time: '1h ago', text: 'Hydraulic winch tow vehicle is approaching via Sion connector.', verified: true }
+    ],
+    status: 'CLEARANCE_CREW_EN_ROUTE'
+  },
+  {
+    id: 'CMD-4048',
+    title: 'Receding Water Level Verified at Gilbert Hill Ridge',
+    location: 'Bhavan’s College Approach to Gilbert Hill, Andheri West',
+    wardId: 'ward-k-west',
+    wardName: 'Ward K-West (Andheri/Santacruz)',
+    type: 'Receding / Cleared',
+    category: 'Receding / Cleared',
+    timestamp: '2h ago (18:42 IST)',
+    timeAgo: '2h ago',
+    recencyMinutes: 120,
+    depth: 4,
+    modelDepth: 3,
+    scoutDepth: 4,
+    sensorDepth: 3.8,
+    sensorId: 'ULTRASONIC-GH-01',
+    agreementPct: 99,
+    scoutName: 'Sunita Rao',
+    trustTier: 'Level 4 Citizen Scout (33 verified)',
+    upvotes: 62,
+    downvotes: 0,
+    userConfirmed: true,
+    userDisputed: false,
+    verified: true,
+    description: 'Water has completely receded along high ridge. Roadway is damp but 100% passable for all 2-wheelers and sedans. Safe passage verified.',
+    hazards: ['Dry Corridor', 'Clear Way'],
+    coordinates: { lat: 19.1230, lng: 72.8330 },
+    evidencePhoto: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=800&q=80',
+    exif: {
+      timestamp: '2026-09-23 18:40:11 IST',
+      device: 'iPhone 13',
+      accuracyMeters: 2.2,
+      tamperProofHash: 'sha256:119802bcda772031',
+      aiWaterlineDetected: false,
+      aiTireSubmersionPct: 5
+    },
+    comments: [
+      { id: 'c11', author: 'Local Scout', time: '1h 30m ago', text: 'Confirmed clear! Good alternative to avoid SV Road.', verified: true }
+    ],
+    status: 'VERIFIED_MATCH'
+  }
+];
+
+export const COMMUNITY_IOT_SENSORS = [
+  {
+    id: 'ULTRASONIC-KW-09',
+    name: 'Kurla West Subway Gauge #09',
+    wardId: 'ward-l',
+    location: 'LBS Marg Underpass, Kurla',
+    coordinates: { lat: 19.0685, lng: 72.8795 },
+    currentDepthCm: 33.8,
+    historical60m: [12, 16, 21, 27, 31, 33.8],
+    batteryPct: 94,
+    rssiSignalDbm: -68,
+    status: 'ONLINE',
+    lastPingSecondsAgo: 14,
+    trend: 'rising',
+    sensorType: 'Ultrasonic Pulse Gauge 50kHz'
+  },
+  {
+    id: 'ULTRASONIC-MS-12',
+    name: 'Milan Subway Ultrasonic Mast #12',
+    wardId: 'ward-k-west',
+    location: 'Milan Subway North Dip, Santacruz',
+    coordinates: { lat: 19.0827, lng: 72.8419 },
+    currentDepthCm: 41.5,
+    historical60m: [22, 28, 33, 38, 40, 41.5],
+    batteryPct: 88,
+    rssiSignalDbm: -72,
+    status: 'ONLINE',
+    lastPingSecondsAgo: 8,
+    trend: 'rising',
+    sensorType: 'Dual Radar-Acoustic Sensor'
+  },
+  {
+    id: 'ULTRASONIC-HM-03',
+    name: 'Hindmata Surcharge Gauge #03',
+    wardId: 'ward-f-north',
+    location: 'Dr Ambedkar Rd, Dadar',
+    coordinates: { lat: 19.0145, lng: 72.8431 },
+    currentDepthCm: 29.1,
+    historical60m: [35, 34, 32, 31, 29.8, 29.1],
+    batteryPct: 91,
+    rssiSignalDbm: -64,
+    status: 'ONLINE',
+    lastPingSecondsAgo: 22,
+    trend: 'falling',
+    sensorType: 'Submersible Pressure Transducer'
+  },
+  {
+    id: 'ULTRASONIC-AS-07',
+    name: 'Andheri Subway Crest Gauge #07',
+    wardId: 'ward-k-west',
+    location: 'Andheri Subway Deep Sump',
+    coordinates: { lat: 19.1199, lng: 72.8468 },
+    currentDepthCm: 60.5,
+    historical60m: [42, 48, 54, 57, 59, 60.5],
+    batteryPct: 85,
+    rssiSignalDbm: -75,
+    status: 'ONLINE',
+    lastPingSecondsAgo: 5,
+    trend: 'rising',
+    sensorType: 'Optical Stage Gauge'
+  },
+  {
+    id: 'ULTRASONIC-BT-01',
+    name: 'Bandra Talao Outfall Sensor #01',
+    wardId: 'ward-h-west',
+    location: 'Bandra West Talao Sluice Gate',
+    coordinates: { lat: 19.0552, lng: 72.8384 },
+    currentDepthCm: 17.5,
+    historical60m: [14, 15, 16, 17, 17.2, 17.5],
+    batteryPct: 97,
+    rssiSignalDbm: -61,
+    status: 'ONLINE',
+    lastPingSecondsAgo: 19,
+    trend: 'stable',
+    sensorType: 'Ultrasonic Pulse Gauge 50kHz'
+  }
+];
+
+export const COMMUNITY_AID_REQUESTS = [
+  {
+    id: 'AID-901',
+    title: 'Emergency Sandbag Wall Assistance',
+    location: 'Hindmata Housing Society Gate 3, Dadar East',
+    wardId: 'ward-f-north',
+    coordinates: { lat: 19.0148, lng: 72.8435 },
+    category: 'Sandbags',
+    urgency: 'HIGH',
+    neededVolunteers: 6,
+    pledgedVolunteers: 4,
+    description: 'Ground floor transformer room at risk of water ingress. Need 4 more volunteers to stack 30 sandbags at entry gate.',
+    postedBy: 'Society Chairman K. Shah',
+    contactPhone: '+91 98201 44521',
+    timestamp: '25m ago',
+    fulfilled: false
+  },
+  {
+    id: 'AID-902',
+    title: 'Elderly Citizen Evacuation Assist (1st Floor)',
+    location: 'Building #4, Chunabhatti Railway Colony',
+    wardId: 'ward-l',
+    coordinates: { lat: 19.0535, lng: 72.8715 },
+    category: 'Evacuation',
+    urgency: 'CRITICAL',
+    neededVolunteers: 3,
+    pledgedVolunteers: 3,
+    description: 'Wheelchair-bound senior citizen needs assistance descending staircase to reach emergency municipal tractor.',
+    postedBy: 'Sonali Shinde (Caregiver)',
+    contactPhone: '+91 99300 22109',
+    timestamp: '15m ago',
+    fulfilled: true
+  },
+  {
+    id: 'AID-903',
+    title: 'Clean Drinking Water & Biscuit Packets Distribution',
+    location: 'Kurla Station West Auto Stand Relief Shelter',
+    wardId: 'ward-l',
+    coordinates: { lat: 19.0688, lng: 72.8785 },
+    category: 'Food/Water',
+    urgency: 'MEDIUM',
+    neededVolunteers: 8,
+    pledgedVolunteers: 6,
+    description: 'Stranded rail commuters waiting out the cloudburst. Distributing dry rations and 20L water cans from community kitchen.',
+    postedBy: 'Khidmat Foundation Mumbai',
+    contactPhone: '+91 98199 88310',
+    timestamp: '40m ago',
+    fulfilled: false
+  },
+  {
+    id: 'AID-904',
+    title: 'Stalled Car Push & Battery Jump Help',
+    location: 'SV Road near Milan Subway off-ramp, Santacruz',
+    wardId: 'ward-k-west',
+    coordinates: { lat: 19.0830, lng: 72.8410 },
+    category: 'Vehicle Assist',
+    urgency: 'MEDIUM',
+    neededVolunteers: 3,
+    pledgedVolunteers: 1,
+    description: 'Two cars stalled in 25cm puddle blocking the single dry lane. Need 2 strong volunteers to help push vehicles onto dry sidewalk ramp.',
+    postedBy: 'Amitabh Joshi',
+    contactPhone: '+91 97690 12845',
+    timestamp: '18m ago',
+    fulfilled: false
+  }
+];
+
+export const COMMUNITY_SHELTERS = [
+  {
+    id: 'SHL-101',
+    name: 'Matunga Municipal Secondary School',
+    location: 'Lakhamsi Napoo Rd, Hindu Colony, Dadar East',
+    wardId: 'ward-f-north',
+    coordinates: { lat: 19.0210, lng: 72.8520 },
+    elevationMeters: 14.2,
+    capacity: 250,
+    currentOccupants: 110,
+    amenities: ['24/7 Generator', 'Medical First Aid', 'Clean Water', 'Pet Friendly'],
+    contactPhone: '022-2414-2281',
+    isOpen: true,
+    distanceKm: '1.2 km'
+  },
+  {
+    id: 'SHL-102',
+    name: 'Gurudwara Sri Guru Singh Sabha Community Hall',
+    location: 'S.V. Road, Near Khar Railway Station West',
+    wardId: 'ward-h-west',
+    coordinates: { lat: 19.0705, lng: 72.8375 },
+    elevationMeters: 12.8,
+    capacity: 350,
+    currentOccupants: 185,
+    amenities: ['Langar Hot Meals', 'Emergency Bedding', 'Power Backup', 'Mobile Charging'],
+    contactPhone: '022-2648-7391',
+    isOpen: true,
+    distanceKm: '0.8 km'
+  },
+  {
+    id: 'SHL-103',
+    name: 'Bhavan’s College Elevated Auditorium',
+    location: 'Munshi Nagar, Andheri West (Gilbert Hill High Ground)',
+    wardId: 'ward-k-west',
+    coordinates: { lat: 19.1240, lng: 72.8340 },
+    elevationMeters: 28.5,
+    capacity: 500,
+    currentOccupants: 140,
+    amenities: ['High Ridge Safety', 'Wi-Fi Hotspot', 'Sanitation Kits', 'Large Parking'],
+    contactPhone: '022-2625-6451',
+    isOpen: true,
+    distanceKm: '2.4 km'
+  },
+  {
+    id: 'SHL-104',
+    name: 'Holy Cross High School Disaster Relief Center',
+    location: 'Premier Compound, Kurla West',
+    wardId: 'ward-l',
+    coordinates: { lat: 19.0665, lng: 72.8810 },
+    elevationMeters: 11.4,
+    capacity: 300,
+    currentOccupants: 220,
+    amenities: ['Emergency Mattresses', 'Drinking Water', 'Doctor on Standby'],
+    contactPhone: '022-2503-1188',
+    isOpen: true,
+    distanceKm: '0.6 km'
+  }
+];
+
+export const SCOUT_LEADERBOARD = [
+  {
+    rank: 1,
+    name: 'Aditya Kulkarni',
+    tier: 'Level 5 Senior Sentinel',
+    badge: '🏆 Master Aqua Warden',
+    reportsCount: 61,
+    corroborations: 480,
+    accuracyPct: 99.4,
+    points: 3820,
+    avatar: '👨‍💼',
+    ward: 'Ward K-West'
+  },
+  {
+    rank: 2,
+    name: 'Pooja Iyer',
+    tier: 'Level 5 Senior Sentinel',
+    badge: '🛡️ Manhole Sentinel',
+    reportsCount: 52,
+    corroborations: 412,
+    accuracyPct: 98.9,
+    points: 3340,
+    avatar: '👩‍🔬',
+    ward: 'Ward H-West'
+  },
+  {
+    rank: 3,
+    name: 'Rohan Deshmukh',
+    tier: 'Level 5 Senior Sentinel',
+    badge: '🌊 Flood Cartographer',
+    reportsCount: 48,
+    corroborations: 395,
+    accuracyPct: 98.2,
+    points: 3110,
+    avatar: '👨‍💻',
+    ward: 'Ward K-West'
+  },
+  {
+    rank: 4,
+    name: 'Aarav Mehta',
+    tier: 'Level 4 Citizen Scout',
+    badge: '⚡ Rapid Ground Scout',
+    reportsCount: 24,
+    corroborations: 210,
+    accuracyPct: 97.6,
+    points: 1980,
+    avatar: '🧑‍🔧',
+    ward: 'Ward L'
+  },
+  {
+    rank: 5,
+    name: 'Farhan Qureshi',
+    tier: 'Level 4 Citizen Scout',
+    badge: '⚡ Hazard Neutralizer',
+    reportsCount: 29,
+    corroborations: 195,
+    accuracyPct: 96.8,
+    points: 1850,
+    avatar: '👨‍🏫',
+    ward: 'Ward H-West'
+  }
+];
+
+export const GNN_RUNOFF_ZONES_GEOJSON = {
+  type: 'FeatureCollection',
+  features: [
+    {
+      type: 'Feature',
+      properties: { name: 'Kurla Mithi Basin Runoff Mesh', severity: 'critical', runoffVelocity: '1.8 m/s' },
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[
+          [72.875, 19.065],
+          [72.883, 19.065],
+          [72.885, 19.072],
+          [72.878, 19.074],
+          [72.875, 19.065]
+        ]]
+      }
+    },
+    {
+      type: 'Feature',
+      properties: { name: 'Milan Subway Depression Contour', severity: 'high', runoffVelocity: '1.2 m/s' },
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[
+          [72.839, 19.080],
+          [72.845, 19.080],
+          [72.846, 19.085],
+          [72.838, 19.084],
+          [72.839, 19.080]
+        ]]
+      }
+    },
+    {
+      type: 'Feature',
+      properties: { name: 'Hindmata Bowl Surcharge Corridor', severity: 'high', runoffVelocity: '1.4 m/s' },
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[
+          [72.840, 19.012],
+          [72.846, 19.012],
+          [72.847, 19.018],
+          [72.841, 19.017],
+          [72.840, 19.012]
+        ]]
+      }
+    }
+  ]
+};
+
+export const MUMBAI_WARDS_COMMUNITY = [
+  { id: 'all', name: 'All Greater Mumbai Wards', center: { lat: 19.0760, lng: 72.8777 }, zoom: 11.8 },
+  { id: 'ward-l', name: 'Ward L (Kurla / LBS Marg)', center: { lat: 19.0682, lng: 72.8791 }, zoom: 14.5 },
+  { id: 'ward-k-west', name: 'Ward K-West (Milan Subway / Andheri)', center: { lat: 19.0825, lng: 72.8415 }, zoom: 14.2 },
+  { id: 'ward-f-north', name: 'Ward F-North (Hindmata / Dadar / Matunga)', center: { lat: 19.0180, lng: 72.8460 }, zoom: 14.5 },
+  { id: 'ward-h-west', name: 'Ward H-West (Bandra / Khar Danda)', center: { lat: 19.0620, lng: 72.8370 }, zoom: 14.2 }
+];
+

@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-canvas text-ink font-sans antialiased overflow-hidden select-none;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+  }
+}
+
+/* Custom technical scrollbar for GIS panels */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E3E0EA;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C9C4D9;
+}
+
+/* Contour line pattern background utility */
+.bg-contour-pattern {
+  background-image: radial-gradient(circle at 50% 50%, rgba(109, 74, 255, 0.03) 0%, transparent 60%),
+                    repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(227, 224, 234, 0.4) 20px),
+                    repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(227, 224, 234, 0.4) 20px);
+}
+
+/* Pulse animation utility for active sensors */
+@keyframes sensor-pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.animate-sensor-pulse {
+  animation: sensor-pulse 2s infinite ease-in-out;
+}
+
+@media (max-width: 1023px) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
