@@ -29,25 +29,57 @@ import {
 } from 'lucide-react';
 
 const CARTO_API_KEY = import.meta.env.VITE_CARTO_API_KEY?.trim();
-const OSM_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
-// Real Tile Providers (Carto Light, OSM Standard, Dark Matter, Satellite Aerial)
+// Generates tile URLs: uses CARTO if user provided an API key; otherwise falls back to free high-reliability Esri basemaps
+const getBasemapTiles = (cartoType, esriService) => {
+  if (CARTO_API_KEY) {
+    const hosts = ['a', 'b', 'c', 'd'];
+    return hosts.map((h) =>
+      `https://${h}.basemaps.cartocdn.com/${cartoType}/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`
+    );
+  }
+  return [`https://server.arcgisonline.com/ArcGIS/rest/services/${esriService}/MapServer/tile/{z}/{y}/{x}`];
+};
+
+const getBasemapAttribution = () => {
+  if (CARTO_API_KEY) {
+    return '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  }
+  return '&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, USGS, NGA';
+};
+
+// Real Tile Providers (OpenStreetMap, Street/Light, Tactical Dark, Satellite Aerial) - Fast, zero watermark
 const BASEMAP_STYLES = {
+  osmStandard: {
+    id: 'osmStandard',
+    name: 'OpenStreetMap Standard',
+    style: {
+      version: 8,
+      sources: {
+        'osm-tiles': {
+          type: 'raster',
+          tiles: [
+            'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+          ],
+          tileSize: 256,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        },
+      },
+      layers: [{ id: 'osm-tiles-layer', type: 'raster', source: 'osm-tiles', minzoom: 0, maxzoom: 19 }],
+    },
+  },
   cartoLight: {
     id: 'cartoLight',
-    name: 'Carto Light (GIS)',
+    name: CARTO_API_KEY ? 'Carto Light (GIS)' : 'Street GIS (Esri)',
     style: {
       version: 8,
       sources: {
         'carto-tiles': {
           type: 'raster',
-          tiles: [
-            ...(CARTO_API_KEY
-              ? ['a', 'b', 'c', 'd'].map((host) => `https://${host}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`)
-              : [OSM_TILES]),
-          ],
+          tiles: getBasemapTiles('light_all', 'World_Street_Map'),
           tileSize: 256,
-          attribution: '&copy; OpenStreetMap &copy; CARTO',
+          attribution: getBasemapAttribution(),
         },
       },
       layers: [{ id: 'carto-tiles-layer', type: 'raster', source: 'carto-tiles', minzoom: 0, maxzoom: 19 }],
@@ -55,38 +87,18 @@ const BASEMAP_STYLES = {
   },
   cartoDark: {
     id: 'cartoDark',
-    name: 'Dark Tactical (Ops)',
+    name: CARTO_API_KEY ? 'Dark Tactical (Ops)' : 'Tactical Dark (Esri)',
     style: {
       version: 8,
       sources: {
         'dark-tiles': {
           type: 'raster',
-          tiles: [
-            ...(CARTO_API_KEY
-              ? ['a', 'b', 'c', 'd'].map((host) => `https://${host}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`)
-              : [OSM_TILES]),
-          ],
+          tiles: getBasemapTiles('dark_all', 'Canvas/World_Dark_Gray_Base'),
           tileSize: 256,
-          attribution: '&copy; OpenStreetMap &copy; CARTO',
+          attribution: getBasemapAttribution(),
         },
       },
       layers: [{ id: 'dark-tiles-layer', type: 'raster', source: 'dark-tiles', minzoom: 0, maxzoom: 19 }],
-    },
-  },
-  osmStandard: {
-    id: 'osmStandard',
-    name: 'OpenStreetMap',
-    style: {
-      version: 8,
-      sources: {
-        'osm-tiles': {
-          type: 'raster',
-          tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-          tileSize: 256,
-          attribution: '&copy; OpenStreetMap contributors',
-        },
-      },
-      layers: [{ id: 'osm-tiles-layer', type: 'raster', source: 'osm-tiles', minzoom: 0, maxzoom: 19 }],
     },
   },
   satellite: {
@@ -436,7 +448,7 @@ export default function InteractiveMapTwin({
 
     const map = new MapLibreMap({
       container: mapContainerRef.current,
-      style: BASEMAP_STYLES[selectedBasemap].style,
+      style: (BASEMAP_STYLES[selectedBasemap] || BASEMAP_STYLES.osmStandard || BASEMAP_STYLES.cartoLight)?.style,
       center: customCenter,
       zoom: customZoom,
       pitch: is3D ? 50 : 0,
@@ -1125,7 +1137,7 @@ export default function InteractiveMapTwin({
             title="Change Basemap Provider"
           >
             <MapIcon className="w-4 h-4 text-purple" />
-            <span className="hidden sm:inline">{BASEMAP_STYLES[selectedBasemap].name}</span>
+            <span className="hidden sm:inline">{(BASEMAP_STYLES[selectedBasemap] || BASEMAP_STYLES.osmStandard)?.name || 'Basemap'}</span>
           </button>
 
           {showBasemapDropdown && (

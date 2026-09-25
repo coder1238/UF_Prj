@@ -23,37 +23,73 @@ import {
 import { ROUTE_CORRIDORS, ROUTE_SAFE_HAVENS, ROUTE_BARRICADES, ROUTE_SENSOR_TELEMETRY } from '../../../data/routePresetsData';
 
 const CARTO_API_KEY = import.meta.env.VITE_CARTO_API_KEY?.trim();
-const OSM_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
-// 4 High-Reliability Basemap Tile Styles
+// Generates tile URLs: uses CARTO if user provided an API key; otherwise falls back to free high-reliability Esri basemaps
+const getBasemapTiles = (cartoType, esriService) => {
+  if (CARTO_API_KEY) {
+    const hosts = ['a', 'b', 'c', 'd'];
+    return hosts.map((h) =>
+      `https://${h}.basemaps.cartocdn.com/${cartoType}/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`
+    );
+  }
+  return [`https://server.arcgisonline.com/ArcGIS/rest/services/${esriService}/MapServer/tile/{z}/{y}/{x}`];
+};
+
+const getBasemapAttribution = () => {
+  if (CARTO_API_KEY) {
+    return '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  }
+  return '&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, USGS, NGA';
+};
+
+// 5 High-Reliability Basemap Tile Styles (Fast, zero watermark)
 const TILE_STYLES = {
+  osm: {
+    name: 'OpenStreetMap Standard',
+    label: 'OSM Standard',
+    style: {
+      version: 8,
+      sources: {
+        'osm-tiles': {
+          type: 'raster',
+          tiles: [
+            'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+          ],
+          tileSize: 256,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }
+      },
+      layers: [{ id: 'osm-tiles-layer', type: 'raster', source: 'osm-tiles', minzoom: 0, maxzoom: 19 }]
+    }
+  },
   carto: {
-    name: 'Carto Clean',
-    label: 'Clean Day',
+    name: CARTO_API_KEY ? 'Carto Clean' : 'Esri Street Map',
+    label: 'Street View',
     style: {
       version: 8,
       sources: {
         'carto-tiles': {
           type: 'raster',
-          tiles: [CARTO_API_KEY ? `https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}` : OSM_TILES],
+          tiles: getBasemapTiles('rastertiles/voyager', 'World_Street_Map'),
           tileSize: 256,
-          attribution: '&copy; OpenStreetMap &copy; CARTO'
+          attribution: getBasemapAttribution()
         }
       },
       layers: [{ id: 'carto-tiles-layer', type: 'raster', source: 'carto-tiles', minzoom: 0, maxzoom: 19 }]
     }
   },
   dark: {
-    name: 'Dark Matter',
+    name: CARTO_API_KEY ? 'Dark Matter' : 'Night Ops',
     label: 'Night Ops',
     style: {
       version: 8,
       sources: {
         'dark-tiles': {
           type: 'raster',
-          tiles: [CARTO_API_KEY ? `https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}` : OSM_TILES],
+          tiles: getBasemapTiles('dark_all', 'Canvas/World_Dark_Gray_Base'),
           tileSize: 256,
-          attribution: '&copy; OpenStreetMap &copy; CARTO Dark'
+          attribution: getBasemapAttribution()
         }
       },
       layers: [{ id: 'dark-tiles-layer', type: 'raster', source: 'dark-tiles', minzoom: 0, maxzoom: 19 }]
@@ -67,7 +103,7 @@ const TILE_STYLES = {
       sources: {
         'sat-tiles': {
           type: 'raster',
-          tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{x}/{y}'],
+          tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
           tileSize: 256,
           attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed'
         }
@@ -83,12 +119,12 @@ const TILE_STYLES = {
       sources: {
         'topo-tiles': {
           type: 'raster',
-          tiles: ['https://tile.opentopomap.org/{z}/{x}/{y}.png'],
+          tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'],
           tileSize: 256,
-          attribution: '&copy; OpenTopoMap contributors'
+          attribution: '&copy; Esri, DeLorme, HERE, USGS'
         }
       },
-      layers: [{ id: 'topo-tiles-layer', type: 'raster', source: 'topo-tiles', minzoom: 0, maxzoom: 17 }]
+      layers: [{ id: 'topo-tiles-layer', type: 'raster', source: 'topo-tiles', minzoom: 0, maxzoom: 18 }]
     }
   }
 };
@@ -169,7 +205,7 @@ export default function SafeRouteMap({
 
     const map = new Map({
       container: mapContainer.current,
-      style: TILE_STYLES[activeTileStyle].style,
+      style: (TILE_STYLES[activeTileStyle] || TILE_STYLES.osm || TILE_STYLES.carto)?.style,
       center: initialCenter,
       zoom: 12.2,
       minZoom: 9.0,
@@ -593,7 +629,7 @@ export default function SafeRouteMap({
                 : 'text-ink-muted hover:text-ink'
             }`}
           >
-            {TILE_STYLES[styleKey].label}
+            {TILE_STYLES[styleKey]?.label || styleKey}
           </button>
         ))}
       </div>
