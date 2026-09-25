@@ -715,7 +715,7 @@ export default function LocationRisk() {
                   </div>
 
                   {/* Interactive Bar Chart */}
-                  <div className="grid grid-cols-6 gap-2 text-center items-end h-32 pt-4">
+                  <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center items-end h-32 pt-4">
                     {hydrographPoints.map((item, idx) => {
                       const heightPercent = Math.min(100, (item.depth / 50) * 100);
                       const isHigh = item.depth > 20;

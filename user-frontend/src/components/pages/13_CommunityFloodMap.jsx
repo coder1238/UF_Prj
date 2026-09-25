@@ -615,7 +615,7 @@ export default function CommunityFloodMap() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-3 gap-3 text-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
                 <div className="p-3 rounded-2xl bg-purple-50/50 border border-purple-200/60">
                   <span className="text-[10px] font-mono text-purple-700 block font-bold">1. Citizen Scout</span>
                   <span className="text-lg font-mono font-extrabold text-ink">{convergenceDetails.cDepth} cm</span>

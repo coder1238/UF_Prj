@@ -669,7 +669,7 @@ export default function PlaceStatusScanner() {
 
                   {isForecastOpen && place.forecast && (
                     <div className="bg-canvas p-3 rounded-xl border border-slate-200 space-y-2 animate-in fade-in duration-150">
-                      <div className="grid grid-cols-6 gap-1 text-center font-mono">
+                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 text-center font-mono">
                         {place.forecast.map(f => (
                           <div key={f.time} className="space-y-1">
                             <span className="text-[9px] text-muted block">{f.time}</span>
@@ -849,4 +849,3 @@ export default function PlaceStatusScanner() {
     </div>
   );
 }
-

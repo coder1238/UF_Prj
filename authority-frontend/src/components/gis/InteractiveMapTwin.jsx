@@ -1084,11 +1084,11 @@ export default function InteractiveMapTwin({
   return (
     <div
       style={{ height }}
-      className={`w-full bg-[#F5F4FA] border border-border rounded-xl relative overflow-hidden flex flex-col shadow-subtle select-none ${cursorClass}`}
+      className={`w-full max-h-[65vh] lg:max-h-none bg-[#F5F4FA] border border-border rounded-xl relative overflow-hidden flex flex-col shadow-subtle select-none ${cursorClass}`}
     >
       {/* Map Header Status HUD */}
-      <div className="absolute top-3 left-3 z-20 flex items-center gap-2 pointer-events-none">
-        <div className="bg-surface/95 backdrop-blur px-3 py-1.5 rounded-lg border border-border text-[11px] font-mono text-ink shadow-sm flex items-center gap-2 pointer-events-auto">
+      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-20 flex max-w-[calc(100%-1rem)] flex-wrap items-center gap-1.5 sm:gap-2 pointer-events-none">
+        <div className="bg-surface/95 backdrop-blur px-2 sm:px-3 py-1.5 rounded-lg border border-border text-[10px] sm:text-[11px] font-mono text-ink shadow-sm flex flex-wrap items-center gap-1.5 sm:gap-2 pointer-events-auto">
           <span className="w-2 h-2 rounded-full bg-status-alert animate-ping" />
           <span className="font-bold">
             {splitMode ? (splitSide === 'live' ? 'CURRENT LIVE (t=0)' : 'PEAK FORECAST (+60m)') : 'MUMBAI METRO // DIGITAL TWIN'}
@@ -1108,7 +1108,7 @@ export default function InteractiveMapTwin({
       </div>
 
       {/* Floating Map Controls (Top Right) */}
-      <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5">
+      <div className="absolute top-14 right-2 sm:top-3 sm:right-3 z-20 flex max-w-[calc(100%-1rem)] flex-wrap justify-end items-center gap-1 sm:gap-1.5">
         {/* Basemap Switcher */}
         <div ref={basemapRef} className="relative">
           <button

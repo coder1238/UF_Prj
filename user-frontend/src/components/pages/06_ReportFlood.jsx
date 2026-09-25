@@ -18,7 +18,7 @@ import {
 } from './report/ReportComponents';
 
 export default function ReportFlood() {
-  const { currentWard, speakAlert, voiceLanguage, isOfflineMode } = useFlood();
+  const { currentWard, speakAlert, voiceLanguage, isOfflineMode, submitReportToBackend } = useFlood();
   const { navigateTo } = useNavigation();
 
   // Wizard state
@@ -271,7 +271,7 @@ export default function ReportFlood() {
     if (e) e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       const ticketId = `FLD-${Math.floor(2100 + Math.random() * 7800)}`;
       const randomHash = Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
       const nowStr = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST';
@@ -320,6 +320,28 @@ export default function ReportFlood() {
           { name: 'Resolved', time: '+45m Target', desc: 'Drainage suction active. Target road clearance beneath 10cm', status: 'PENDING' }
         ]
       };
+
+      try {
+        const wardId = ({ 'Ward L': 'ward-l', 'Ward K-West': 'ward-k-west', 'Ward K-East': 'ward-k-east', 'Ward H-West': 'ward-h-west', 'Ward G-North': 'ward-g-north', 'Ward F-North': 'ward-f-north', 'Ward A': 'ward-a' })[detectedWard] || currentWard.id;
+        const saved = await submitReportToBackend({
+          title: newReportRecord.title,
+          category: newReportRecord.category,
+          severity: isEmergencyPriority || selectedDepth > 50 ? 'critical' : selectedDepth > 25 ? 'high' : 'moderate',
+          description: userComment || `Reported ${selectedDepth} cm water near ${locationName}. Hazards: ${newReportRecord.hazards.join(', ') || 'waterlogging'}.`,
+          ward_id: wardId,
+          lat: coords.lat,
+          lng: coords.lng,
+          reporter_name: isAnonymous ? null : 'Citizen reporter',
+          photo_url: photos[0]?.url || null,
+        });
+        newReportRecord.id = saved.id;
+        newReportRecord.status = 'submitted';
+        newReportRecord.statusColor = 'blue';
+        newReportRecord.verified = false;
+        newReportRecord.verificationSource = null;
+      } catch (error) {
+        console.warn('[FloodContext] Backend unreachable, using local mock data');
+      }
 
       // Feature 22: Save to LocalStorage for persistent cross-page state
       try {

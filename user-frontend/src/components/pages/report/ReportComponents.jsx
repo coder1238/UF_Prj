@@ -625,8 +625,8 @@ export function EmergencySosModal({ isOpen, onClose, locationName, wardName }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border-2 border-red-500 shadow-2xl animate-fadeIn space-y-5">
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4">
+      <div className="bg-white rounded-3xl max-h-[90vh] max-w-lg w-full p-4 sm:p-8 border-2 border-red-500 shadow-2xl overflow-y-auto animate-fadeIn space-y-5 lg:max-h-none lg:overflow-visible">
         <div className="flex items-center gap-3 text-red-600">
           <div className="p-3 bg-red-100 rounded-2xl">
             <AlertOctagon className="w-8 h-8 text-red-600 animate-bounce" />
@@ -1385,5 +1385,4 @@ export function DraftAutoRestoreDrawer({ isOpen, onClose, onLoadDraft, onClearDr
     </div>
   );
 }
-
 

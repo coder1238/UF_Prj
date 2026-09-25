@@ -14,10 +14,11 @@ import {
   X,
   Building2,
   AlertCircle,
+  Menu,
 } from 'lucide-react';
 import { NAV_ITEMS } from './NavigationRail';
 
-export default function TopUtilityBar() {
+export default function TopUtilityBar({ onToggleSidebar }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { selectedWard, setSelectedWard, alertsList, setMapFocusTarget } = useFloodCommand();
@@ -110,15 +111,16 @@ export default function TopUtilityBar() {
     : [];
 
   return (
-    <header className="h-[64px] bg-surface border-b border-border px-5 flex items-center justify-between z-30 select-none flex-shrink-0">
+    <header className="h-[64px] min-w-0 bg-surface border-b border-border px-2 sm:px-5 flex items-center justify-between gap-2 lg:gap-0 z-30 select-none flex-shrink-0">
       {/* Left: Operational Module Name */}
-      <div className="flex items-center gap-3">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+        <button type="button" onClick={onToggleSidebar} className="lg:hidden inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border text-ink-secondary hover:bg-surface-secondary" aria-label="Open navigation menu"><Menu className="h-5 w-5" /></button>
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-purple animate-pulse" />
           <span className="font-mono text-xs font-bold text-purple px-1.5 py-0.5 rounded bg-purple-soft">
             {currentNav.num}
           </span>
-          <h1 className="font-bold text-[15px] tracking-tight text-ink uppercase">
+          <h1 className="max-w-[76px] truncate font-bold text-[13px] tracking-tight text-ink uppercase sm:max-w-[180px] sm:text-[15px] lg:max-w-none">
             {currentNav.label}
           </h1>
         </div>
@@ -130,7 +132,7 @@ export default function TopUtilityBar() {
       </div>
 
       {/* Center: Global Search Bar with Autocomplete Dropdown */}
-      <div ref={searchRef} className="flex-1 max-w-md mx-6 hidden md:block relative">
+      <div ref={searchRef} className="flex-1 max-w-md mx-6 hidden lg:block relative">
         <div className="relative">
           <Search className="w-4 h-4 text-ink-muted absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -198,7 +200,7 @@ export default function TopUtilityBar() {
       </div>
 
       {/* Right: Ward Selection Menu & Status Telemetry */}
-      <div className="flex items-center gap-3">
+      <div className="flex shrink-0 items-center gap-1 sm:gap-3">
         {/* ========================================================================= */}
         {/* ========================================================================= */}
         {/* EXECUTIVE JURISDICTION SELECTION MENU                                      */}
@@ -260,7 +262,7 @@ export default function TopUtilityBar() {
 
           {/* Expanded Selection Menu Popover Card */}
           {isWardDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-96 bg-surface/98 backdrop-blur-md border border-border rounded-2xl shadow-elevated overflow-hidden z-50 animate-scaleUp">
+            <div className="absolute right-0 mt-2 w-[min(24rem,calc(100vw-1rem))] sm:w-96 bg-surface/98 backdrop-blur-md border border-border rounded-2xl shadow-elevated overflow-hidden z-50 animate-scaleUp">
               {/* Menu Header with Category Tabs & Search */}
               <div className="p-3 bg-surface-secondary/80 border-b border-border">
                 <div className="flex items-center justify-between mb-2.5">

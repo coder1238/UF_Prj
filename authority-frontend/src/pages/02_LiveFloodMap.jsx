@@ -1064,7 +1064,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 2: Spot Depth & Elevation Inspector Card */}
       {activeDrawer === 'spotInspect' && inspectedPoint && (
-        <div className="fixed bottom-6 right-6 z-40 w-80 bg-surface border border-border rounded-xl shadow-elevated p-4 animate-in fade-in slide-in-from-bottom-3">
+        <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-40 w-[min(20rem,calc(100vw-1.5rem))] sm:w-80 bg-surface border border-border rounded-xl shadow-elevated p-4 animate-in fade-in slide-in-from-bottom-3">
           <div className="flex items-center justify-between border-b border-border pb-2 mb-3">
             <span className="text-xs font-bold text-ink uppercase flex items-center gap-1.5">
               <Crosshair className="w-4 h-4 text-purple" />
@@ -1125,7 +1125,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 3: Distance & Emergency Transit Ruler */}
       {activeDrawer === 'ruler' && (
-        <div className="fixed bottom-6 right-6 z-40 w-80 bg-surface border border-border rounded-xl shadow-elevated p-4 animate-in fade-in">
+        <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-40 w-[min(20rem,calc(100vw-1.5rem))] sm:w-80 bg-surface border border-border rounded-xl shadow-elevated p-4 animate-in fade-in">
           <div className="flex items-center justify-between border-b border-border pb-2 mb-3">
             <span className="text-xs font-bold text-ink uppercase flex items-center gap-1.5">
               <Ruler className="w-4 h-4 text-purple" />
@@ -1174,7 +1174,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 4: Live CCTV Visual AI Feeds Drawer */}
       {activeDrawer === 'cctv' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Camera className="w-5 h-5 text-blue-500" />
@@ -1233,7 +1233,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 5: Critical Infrastructure Impact Drawer */}
       {activeDrawer === 'infra' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Building2 className="w-5 h-5 text-red-500" />
@@ -1290,7 +1290,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 7: Doppler Radar Tracker Drawer */}
       {activeDrawer === 'radar' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[440px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(440px,80vw)] lg:w-[440px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Radio className="w-5 h-5 text-rose-500" />
@@ -1341,7 +1341,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 8: Tidal Hydrograph & Sluice Gate Control HUD */}
       {activeDrawer === 'tidal' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Waves className="w-5 h-5 text-indigo-500" />
@@ -1407,7 +1407,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 9: Stormwater Pumping Stations Booster Console */}
       {activeDrawer === 'pumps' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Gauge className="w-5 h-5 text-cyan-600" />
@@ -1470,7 +1470,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 10: NDRF Rescue Fleet Dispatcher Drawer */}
       {activeDrawer === 'rescue' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <LifeBuoy className="w-5 h-5 text-emerald-600" />
@@ -1535,7 +1535,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 11: Citizen Crowdsourced Reports Verification Queue */}
       {activeDrawer === 'citizen' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Users className="w-5 h-5 text-orange-500" />
@@ -1596,7 +1596,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 12: Rapid What-If Scenario Stress-Test Drawer */}
       {activeDrawer === 'whatif' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Sliders className="w-5 h-5 text-purple" />
@@ -1688,7 +1688,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 13: Emergency Safe Route Finder Drawer */}
       {activeDrawer === 'safeRoute' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Route className="w-5 h-5 text-status-safe" />
@@ -1760,7 +1760,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 14: Dynamic Flood Barriers & Sandbags Drawer */}
       {activeDrawer === 'barriers' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Shield className="w-5 h-5 text-status-warning" />
@@ -1803,8 +1803,8 @@ export default function LiveFloodMap() {
 
       {/* Feature 15: Automated CAP Broadcast Evacuation & Siren Modal */}
       {activeDrawer === 'capBroadcast' && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-surface border border-border rounded-2xl shadow-elevated max-w-lg w-full p-5 flex flex-col gap-4 animate-in zoom-in-95">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4">
+          <div className="bg-surface border border-border rounded-2xl shadow-elevated max-h-[90vh] max-w-lg w-full p-4 sm:p-5 flex flex-col gap-4 overflow-y-auto animate-in zoom-in-95 lg:max-h-none lg:overflow-visible">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div className="flex items-center gap-2">
                 <ShieldAlert className="w-5 h-5 text-status-alert" />
@@ -1872,7 +1872,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 16: Ward Hazard Heatmap & Vulnerability Ranking Drawer */}
       {activeDrawer === 'wardMatrix' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(460px,80vw)] lg:w-[460px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-amber-500" />
@@ -1921,7 +1921,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 17: Bathymetry & River Cross-Section Profile Drawer */}
       {activeDrawer === 'bathymetry' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[480px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(480px,80vw)] lg:w-[480px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Activity className="w-5 h-5 text-blue-600" />
@@ -1977,7 +1977,7 @@ export default function LiveFloodMap() {
 
       {/* Feature 18: IoT Ultrasonic Gauge Telemetry Grid Drawer */}
       {activeDrawer === 'iotGrid' && (
-        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[480px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
+        <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[min(480px,80vw)] lg:w-[480px] bg-surface border-l border-border shadow-elevated p-5 flex flex-col gap-4 overflow-y-auto animate-in slide-in-from-right">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <div className="flex items-center gap-2">
               <Zap className="w-5 h-5 text-yellow-600" />

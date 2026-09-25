@@ -530,7 +530,7 @@ export default function AIModelTransparency() {
                 </div>
 
                 {benchmarkResult && (
-                  <div className="grid grid-cols-3 gap-3 p-4 bg-purple-50/60 rounded-2xl border border-purple-200">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 bg-purple-50/60 rounded-2xl border border-purple-200">
                     <div className="text-center">
                       <span className="text-[10px] text-muted uppercase block">Hardware FLOPS</span>
                       <strong className="text-purple text-base block mt-0.5">{benchmarkResult.gflops} GFLOPS</strong>

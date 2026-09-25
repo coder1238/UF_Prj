@@ -701,8 +701,8 @@ export default function LiveFloodMap() {
 
       {/* MODAL 1: Live CCTV Stream Simulator (Feature 6) */}
       {isCctvModalOpen && activeCctv && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full text-white overflow-hidden shadow-2xl animate-scaleUp">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4 animate-fadeIn">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-h-[90vh] max-w-2xl w-full text-white overflow-y-auto shadow-2xl animate-scaleUp lg:max-h-none lg:overflow-hidden">
             
             {/* Modal Header */}
             <div className="px-5 py-3 border-b border-slate-800 flex items-center justify-between">
@@ -800,8 +800,8 @@ export default function LiveFloodMap() {
 
       {/* MODAL 2: Interactive Incident Report (Pin Dropper) (Feature 10) */}
       {isReportModalOpen && newPinCoords && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-scaleUp space-y-4">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4 animate-fadeIn">
+          <div className="bg-white rounded-3xl max-h-[90vh] max-w-md w-full p-4 sm:p-6 shadow-2xl border border-slate-200 overflow-y-auto animate-scaleUp space-y-4 lg:max-h-none lg:overflow-visible">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2 text-slate-900 font-extrabold text-sm">
                 <Crosshair className="w-4 h-4 text-purple-600" />
@@ -883,8 +883,8 @@ export default function LiveFloodMap() {
 
       {/* MODAL 3: Emergency SOS Dispatch Hub (Feature 16) */}
       {isSosModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-red-200 animate-scaleUp space-y-4">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4 animate-fadeIn">
+          <div className="bg-white rounded-3xl max-h-[90vh] max-w-md w-full p-4 sm:p-6 shadow-2xl border border-red-200 overflow-y-auto animate-scaleUp space-y-4 lg:max-h-none lg:overflow-visible">
             <div className="flex items-center justify-between border-b border-red-100 pb-3">
               <div className="flex items-center gap-2 text-red-600 font-extrabold text-base">
                 <PhoneCall className="w-5 h-5 animate-bounce" />
@@ -932,8 +932,8 @@ export default function LiveFloodMap() {
 
       {/* MODAL 4: Elevation Contour DEM Profile Drawer (Feature 14) */}
       {isElevationDrawerOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 animate-scaleUp space-y-4">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4 animate-fadeIn">
+          <div className="bg-white rounded-3xl max-h-[90vh] max-w-2xl w-full p-4 sm:p-6 shadow-2xl border border-slate-200 overflow-y-auto animate-scaleUp space-y-4 lg:max-h-none lg:overflow-visible">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <span className="text-[10px] font-mono text-slate-400 uppercase font-bold">DIGITAL ELEVATION MODEL (DEM)</span>
@@ -989,8 +989,8 @@ export default function LiveFloodMap() {
 
       {/* MODAL 5: Citizen Saved Bookmarks Hub (Feature 18) */}
       {isBookmarksModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-scaleUp space-y-4">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4 animate-fadeIn">
+          <div className="bg-white rounded-3xl max-h-[90vh] max-w-md w-full p-4 sm:p-6 shadow-2xl border border-slate-200 overflow-y-auto animate-scaleUp space-y-4 lg:max-h-none lg:overflow-visible">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2 text-slate-900 font-extrabold text-sm">
                 <Bookmark className="w-4 h-4 text-purple-600" />
@@ -1047,8 +1047,8 @@ export default function LiveFloodMap() {
 
       {/* MODAL 6: Situation Report Exporter (Feature 19) */}
       {isExportModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-scaleUp space-y-4">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4 animate-fadeIn">
+          <div className="bg-white rounded-3xl max-h-[90vh] max-w-lg w-full p-4 sm:p-6 shadow-2xl border border-slate-200 overflow-y-auto animate-scaleUp space-y-4 lg:max-h-none lg:overflow-visible">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2 text-slate-900 font-extrabold text-sm">
                 <Printer className="w-4 h-4 text-purple-600" />

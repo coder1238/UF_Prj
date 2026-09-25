@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { FloodProvider } from './context/FloodContext';
 import { NavigationProvider } from './context/NavigationContext';
 import CitizenSidebar from './components/layout/CitizenSidebar';
@@ -28,10 +28,24 @@ import AIModelTransparency from './components/pages/16_AIModelTransparency';
 
 import { ShieldCheck, PhoneCall, Cpu } from 'lucide-react';
 import UrbanFloodLogo from './components/shared/UrbanFloodLogo';
+import Landing from './pages/Landing';
 
 function AppLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [hasEntered, setHasEntered] = useState(() => {
+    try { return window.sessionStorage.getItem('ufi_entered') === 'true'; }
+    catch { return false; }
+  });
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const enterApp = (path = '/') => {
+    try { window.sessionStorage.setItem('ufi_entered', 'true'); } catch { /* Continue for this page view if storage is unavailable. */ }
+    setHasEntered(true);
+    if (path !== location.pathname) navigate(path);
+  };
+
+  if (!hasEntered) return <Landing onEnter={enterApp} />;
 
   const isHUD = location.pathname === '/hud';
 

@@ -10,6 +10,7 @@ import {
   ChevronUp,
 } from 'lucide-react';
 import { HYDRAULIC_SOLVER_DEFAULTS } from './scenarioConstants';
+import { useFloodCommand } from '../../context/FloodCommandContext';
 
 const SIMULATION_STAGES = [
   { stage: 1, title: 'Boundary Inflow & Hydrograph Coupling', desc: 'Coupling 1D open-channel St. Venant outfall equations with radar hyetograph' },
@@ -25,6 +26,7 @@ export default function SolverConvergenceConsole({
   isSimulating,
   setIsSimulating,
 }) {
+  const { activateScenario } = useFloodCommand();
   const [currentStage, setCurrentStage] = useState(0);
   const [progress, setProgress] = useState(0);
   const [solverLogs, setSolverLogs] = useState([]);
@@ -39,7 +41,12 @@ export default function SolverConvergenceConsole({
     gpuMemMb: '1,840 MB',
   });
 
-  const handleStartSimulation = () => {
+  const handleStartSimulation = async () => {
+    try {
+      await activateScenario();
+    } catch (error) {
+      console.warn('[FloodCommandContext] Backend unreachable, using local mock data');
+    }
     setIsSimulating(true);
     setProgress(0);
     setCurrentStage(1);

@@ -286,8 +286,8 @@ export default function CitizenPortalView() {
 
       {/* Submit Report Modal */}
       {showReportModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn">
-          <div className="bg-white rounded-2xl border border-border shadow-2xl max-w-md w-full p-6">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4 z-50 animate-fadeIn">
+          <div className="bg-white rounded-2xl border border-border shadow-2xl max-h-[90vh] max-w-md w-full p-4 sm:p-6 overflow-y-auto lg:max-h-none lg:overflow-visible">
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <h3 className="text-sm font-bold text-ink flex items-center gap-2">
                 <Send className="w-4 h-4 text-purple" />
@@ -367,4 +367,3 @@ export default function CitizenPortalView() {
     </div>
   );
 }
-

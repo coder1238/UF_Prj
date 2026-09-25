@@ -1061,7 +1061,7 @@ export default function MyReports() {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 text-center">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
                   <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
                     <span className="text-[10px] text-slate-400 block">OBSERVED</span>
                     <div className="text-xl font-black text-purple-primary">{selectedReport.depth} cm</div>

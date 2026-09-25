@@ -32,8 +32,8 @@ Live Safety Tracker: https://urbanflood.bmc.gov.in/route?corridor=${activeCorrid
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/70 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-3xl border border-border shadow-2xl max-w-lg w-full p-6 space-y-5">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4 bg-ink/70 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white rounded-3xl border border-border shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6 space-y-5 lg:max-h-none lg:overflow-visible">
         <div className="flex items-center justify-between pb-3 border-b border-border">
           <div className="flex items-center gap-2">
             <Share2 className="w-5 h-5 text-primary" />

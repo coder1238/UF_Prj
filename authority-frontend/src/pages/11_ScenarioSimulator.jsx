@@ -59,6 +59,7 @@ export default function ScenarioSimulator() {
     setScenarioParams,
     setMapFocusTarget,
     dispatchIncident,
+    resetScenario,
   } = useFloodCommand();
 
   // Split Viewport & Visual Modes
@@ -152,7 +153,12 @@ export default function ScenarioSimulator() {
   };
 
   // Reset to Baseline
-  const handleResetBaseline = () => {
+  const handleResetBaseline = async () => {
+    try {
+      await resetScenario();
+    } catch (error) {
+      console.warn('[FloodCommandContext] Backend unreachable, using local mock data');
+    }
     const baseline = BENCHMARK_PRESETS.find((p) => p.id === 'preset-baseline')?.params || {
       rainfallIntensity: 50,
       durationMin: 60,

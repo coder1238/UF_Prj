@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import {
   ROAD_CORRIDORS,
   CRITICAL_ASSETS,
@@ -14,10 +14,58 @@ import {
   INTER_AGENCIES,
   INITIAL_COMMAND_LOGS,
 } from '../data/floodData';
+import { getWards } from '../api/wards';
+import { getRoads } from '../api/roads';
+import { getIncidents } from '../api/incidents';
+import { getAlerts } from '../api/alerts';
+import { getShelters } from '../api/shelters';
+import { getTeams } from '../api/teams';
+import { getReports, verifyReport as verifyBackendReport } from '../api/reports';
+import { login as loginRequest, setSessionToken } from '../api/auth';
+import { activateScenario as activateBackendScenario, resetScenario as resetBackendScenario } from '../api/scenario';
+import { useScenarioSocket } from '../api/websocket';
 
 const FloodCommandContext = createContext();
 
+const wardShortName = (id = '') => ({
+  'ward-l': 'Ward L', 'ward-k-west': 'Ward K-West', 'ward-k-east': 'Ward K-East',
+  'ward-h-west': 'Ward H-West', 'ward-g-north': 'Ward G-North', 'ward-f-north': 'Ward F-North', 'ward-a': 'Ward A',
+}[id] || id);
+
+function mapAuthorityReport(report) {
+  const status = ({ submitted: 'PENDING VERIFICATION', under_review: 'UNDER REVIEW', verified: 'OFFICIALLY VERIFIED & SQUAD EN ROUTE', rejected: 'REJECTED', resolved: 'RESOLVED BY FIELD PUMPING' })[report.status] || report.status;
+  return { id: report.id, title: report.title, location: report.title, ward: wardShortName(report.ward_id), user: report.reporter_name || 'Citizen reporter', timestamp: report.submitted_at, reportedDepth: 'Not provided', comment: report.description, votes: 0, status, severity: report.severity, coordinates: [report.lat, report.lng] };
+}
+
+function mapAuthorityIncident(incident, reports = [], base = []) {
+  const report = reports.find((item) => item.id === incident.report_id);
+  const original = base.find((item) => item.id === incident.id || item.id === incident.report_id) || {};
+  const severity = typeof incident.severity === 'number' ? (incident.severity >= 5 ? 'Critical' : incident.severity >= 4 ? 'High' : incident.severity >= 3 ? 'Moderate' : 'Low') : incident.severity;
+  const status = ({ open: 'TRIAGE QUEUE', assigned: 'CREW DEPLOYED / EN ROUTE', in_progress: 'CREW DEPLOYED / EN ROUTE', resolved: 'RESOLVED / ALL CLEAR' })[incident.status] || incident.status;
+  return { ...original, id: incident.id, reportId: incident.report_id, title: report?.title || original.title || incident.category, location: report?.title || original.location || 'Mumbai ward incident', ward: wardShortName(report?.ward_id), severity, status, depth: original.depth || 0, peopleAffected: incident.people_affected, priorityScore: incident.priority_score, priorityBreakdown: incident.priority_breakdown, coordinates: report ? [report.lat, report.lng] : original.coordinates || [19.05, 72.85], timeline: original.timeline || [] };
+}
+
+function mapAuthorityAlert(alert) {
+  const severity = String(alert.severity || '').toLowerCase();
+  const title = severity === 'critical' ? `FLASH FLOOD WARNING: ${alert.title}` : severity === 'high' ? `FLOOD WATCH: ${alert.title}` : `RAIN ADVISORY: ${alert.title}`;
+  return { id: alert.id, title, message: alert.message, wards: alert.ward_id ? [wardShortName(alert.ward_id)] : ['Citywide'], status: 'PUBLISHED - ACTIVE', timestamp: alert.issued_at, audienceReach: 'Ward residents', channels: ['Citizen App'], source: alert.source, severity };
+}
+
+function mapAuthorityShelter(shelter) {
+  return { id: shelter.id, name: shelter.name, ward: wardShortName(shelter.ward_id), type: shelter.type, currentOccupants: shelter.total_capacity - shelter.available_capacity, totalCapacity: shelter.total_capacity, status: 'ACTIVE / RECEIVING', hasPowerBackup: shelter.has_power_backup, hasMedicalStaff: shelter.has_medical_staff, coordinates: [shelter.lat, shelter.lng] };
+}
+
+function mapAuthorityTeam(team) {
+  return { id: team.id, name: team.name, type: team.team_type, capacity: team.capacity, status: String(team.availability || 'available').toUpperCase(), coordinates: [team.current_lat, team.current_lng], equipment: team.equipment };
+}
+
 export function FloodCommandProvider({ children }) {
+  const [authToken, setAuthToken] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLiveBackend, setIsLiveBackend] = useState(false);
+  const [backendWards, setBackendWards] = useState(null);
+  const [backendRoads, setBackendRoads] = useState(null);
+  const [backendTeams, setBackendTeams] = useState(null);
   // Active Navigation Module ID (01 to 18)
   const [activeModule, setActiveModule] = useState('01-command');
 
@@ -105,10 +153,16 @@ export function FloodCommandProvider({ children }) {
 
   // Citizen Reports Queue State
   const [citizenReportsList, setCitizenReportsList] = useState(CITIZEN_REPORTS);
-  const verifyCitizenReport = (reportId, newStatus) => {
+  const verifyCitizenReport = async (reportId, newStatus) => {
     setCitizenReportsList((prev) =>
       prev.map((rep) => (rep.id === reportId ? { ...rep, status: newStatus } : rep))
     );
+    try {
+      const action = String(newStatus).toLowerCase().includes('reject') ? 'reject' : String(newStatus).toLowerCase().includes('escalat') ? 'escalate' : 'verify';
+      await verifyBackendReport(reportId, action, authToken);
+    } catch (error) {
+      console.warn('[FloodCommandContext] Backend unreachable, using local mock data');
+    }
   };
 
   // Pumping Station Boost State
@@ -460,6 +514,121 @@ export function FloodCommandProvider({ children }) {
     );
   };
 
+  const refreshAuthorityReports = useCallback(async () => {
+    const [reports, incidents] = await Promise.all([getReports(), getIncidents()]);
+    setCitizenReportsList(reports.map(mapAuthorityReport));
+    const mappedIncidents = incidents.map((incident) => mapAuthorityIncident(incident, reports, INCIDENTS));
+    setIncidentList(mappedIncidents);
+    setSelectedIncident((previous) => mappedIncidents.find((incident) => incident.id === previous?.id) || mappedIncidents[0] || previous);
+    return reports;
+  }, []);
+
+  const login = useCallback(async (username, password) => {
+    try {
+      const result = await loginRequest(username, password);
+      setAuthToken(result.access_token);
+      setSessionToken(result.access_token);
+      setCurrentUser(result.user);
+      return { success: true, user: result.user };
+    } catch (error) {
+      return { success: false, error: error.message || 'Unable to sign in' };
+    }
+  }, []);
+
+  const logout = useCallback(() => {
+    setAuthToken(null);
+    setSessionToken(null);
+    setCurrentUser(null);
+  }, []);
+
+  const activateScenario = useCallback(async () => {
+    if (!authToken) throw new Error('Sign in to activate the scenario');
+    const result = await activateBackendScenario(authToken);
+    setNowcastMinutes(0);
+    setIsPlaying(false);
+    return result;
+  }, [authToken]);
+
+  const resetScenario = useCallback(async () => {
+    if (!authToken) throw new Error('Sign in to reset the scenario');
+    const result = await resetBackendScenario(authToken);
+    setNowcastMinutes(0);
+    setIsPlaying(false);
+    const [wards, roads] = await Promise.all([getWards(), getRoads()]);
+    setBackendWards(wards);
+    setBackendRoads(roads);
+    return result;
+  }, [authToken]);
+
+  const handleBackendMessage = useCallback((event) => {
+    if (event.type === 'scenario_tick') {
+      setNowcastMinutes(event.step || 0);
+      setIsPlaying(false);
+      setScenarioParams((previous) => ({ ...previous, rainfallIntensity: event.rainfall_intensity_mmhr ?? previous.rainfallIntensity }));
+      if (Array.isArray(event.wards)) setBackendWards((previous) => (previous || []).map((ward) => {
+        const update = event.wards.find((item) => item.id === ward.id);
+        return update ? { ...ward, ...update } : ward;
+      }));
+      if (Array.isArray(event.roads_changed)) {
+        setBackendRoads((previous) => (previous || []).map((road) => {
+          const update = event.roads_changed.find((item) => item.id === road.id);
+          return update ? { ...road, ...update } : road;
+        }));
+        setSelectedRoad((previous) => {
+          const update = event.roads_changed.find((item) => item.id === previous?.id);
+          if (!update) return previous;
+          const status = { open: 'OPEN / CLEAR', restricted: 'CAUTION', flooded: 'CRITICAL', closed: 'CRITICAL' }[update.status] || update.status;
+          return { ...previous, status, currentDepth: update.current_depth_cm ?? previous.currentDepth };
+        });
+      }
+    } else if (event.type === 'report_update') {
+      refreshAuthorityReports().catch(() => console.warn('[FloodCommandContext] Backend unreachable, using local mock data'));
+    } else if (event.type === 'incident_update') {
+      getIncidents().then((items) => {
+        const mappedIncidents = items.map((item) => mapAuthorityIncident(item, [], INCIDENTS));
+        setIncidentList(mappedIncidents);
+        setSelectedIncident((previous) => mappedIncidents.find((incident) => incident.id === previous?.id) || mappedIncidents[0] || previous);
+      })
+        .catch(() => console.warn('[FloodCommandContext] Backend unreachable, using local mock data'));
+    }
+  }, [refreshAuthorityReports]);
+  useScenarioSocket(handleBackendMessage);
+
+  useEffect(() => {
+    let active = true;
+    Promise.all([getWards(), getRoads(), getIncidents(), getAlerts(), getShelters(), getTeams(), getReports()])
+      .then(([wards, roads, incidents, alerts, shelters, teams, reports]) => {
+        if (!active) return;
+        setBackendWards(wards);
+        setBackendRoads(roads);
+        setBackendTeams(teams);
+        setIsLiveBackend(true);
+        const mappedIncidents = incidents.map((incident) => mapAuthorityIncident(incident, reports, INCIDENTS));
+        setIncidentList(mappedIncidents);
+        setSelectedIncident((previous) => mappedIncidents.find((incident) => incident.id === previous?.id) || mappedIncidents[0] || previous);
+        setCitizenReportsList(reports.map(mapAuthorityReport));
+        setAlertsList(alerts.map(mapAuthorityAlert));
+        setEvacuationShelters(shelters.map(mapAuthorityShelter));
+        setRescueFleet(teams.map(mapAuthorityTeam));
+        if (roads.length) {
+          const road = roads[0];
+          const normalizedName = road.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const base = ROAD_CORRIDORS.find((item) => item.id === road.id)
+            || ROAD_CORRIDORS.find((item) => normalizedName.includes(item.name.split('(')[0].toLowerCase().replace(/[^a-z0-9]/g, '')))
+            || ROAD_CORRIDORS.find((item) => normalizedName.includes('subway') && item.name.toLowerCase().includes('subway'))
+            || ROAD_CORRIDORS[0] || {};
+          const state = { open: 'OPEN / CLEAR', restricted: 'CAUTION', flooded: 'CRITICAL', closed: 'CRITICAL' }[road.status] || road.status;
+          setSelectedRoad({ ...base, ...road, ward: wardShortName(road.ward_id), status: state, currentDepth: road.current_depth_cm, coordinates: road.geometry_geojson?.[0] ? [road.geometry_geojson[0][1], road.geometry_geojson[0][0]] : base.coordinates });
+        }
+      })
+      .catch(() => {
+        if (!active) return;
+        console.warn('[FloodCommandContext] Backend unreachable, using local mock data');
+        setIsLiveBackend(false);
+      });
+    return () => { active = false; };
+  }, []);
+
   // Playback timer for 0-3h nowcast scrub animation
   useEffect(() => {
     let interval = null;
@@ -480,6 +649,16 @@ export function FloodCommandProvider({ children }) {
   return (
     <FloodCommandContext.Provider
       value={{
+        authToken,
+        currentUser,
+        login,
+        logout,
+        isLiveBackend,
+        wardsData: backendWards,
+        roadsData: backendRoads,
+        teamsData: backendTeams,
+        activateScenario,
+        resetScenario,
         activeModule,
         setActiveModule,
         selectedWard,
@@ -570,5 +749,3 @@ export function useFloodCommand() {
   }
   return context;
 }
-
-

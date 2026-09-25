@@ -812,7 +812,7 @@ export default function FloodHotspots() {
                 <span className="text-[10px] font-mono text-ink-secondary">CLICK TO SCRUB</span>
               </span>
 
-              <div className="grid grid-cols-4 gap-1.5 text-center text-[10px] font-mono mt-1">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-center text-[10px] font-mono mt-1">
                 {[
                   { id: 'current', label: 'Current', data: currentHotspot.trajectory.current },
                   { id: '+1h', label: '+1 Hour', data: currentHotspot.trajectory.plus1h },

@@ -13,8 +13,8 @@ export default function RouteComparisonModal({
   const corridors = Object.values(ROUTE_CORRIDORS);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/70 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-3xl border border-border shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center overflow-y-auto p-3 sm:p-4 bg-ink/70 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white rounded-3xl border border-border shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b border-border">
           <div>

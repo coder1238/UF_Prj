@@ -1173,7 +1173,7 @@ export default function InteractiveMapCanvas({
   }, [activeLayers, mapLoaded, onOpenCCTVModal, onSelectHazard, onSelectSafePlace, showIoTSensors, showSubwayBadges, onSelectIoTSensor, onSelectSubway]);
 
   return (
-    <div className={`relative w-full ${height} rounded-3xl border border-slate-200 shadow-sm overflow-hidden select-none bg-slate-100`}>
+    <div className={`relative w-full ${height} max-h-[65vh] lg:max-h-none rounded-3xl border border-slate-200 shadow-sm overflow-hidden select-none bg-slate-100`}>
       
       {/* Top Floating Map Info Bar */}
       <div className="absolute top-3 left-3 z-20 flex flex-wrap items-center gap-2 pointer-events-auto">
@@ -1216,7 +1216,7 @@ export default function InteractiveMapCanvas({
       </div>
 
       {/* Floating Basemap & 3D Tools (Top Right) */}
-      <div className="absolute top-3 right-14 z-20 flex items-center gap-1.5 pointer-events-auto">
+      <div className="absolute top-14 right-2 sm:top-3 sm:right-14 z-20 flex max-w-[calc(100%-1rem)] flex-wrap justify-end items-center gap-1 sm:gap-1.5 pointer-events-auto">
         {/* 3D Perspective Tilt Button */}
         <button
           onClick={toggle3D}
@@ -1325,7 +1325,7 @@ export default function InteractiveMapCanvas({
 
       {/* Selected Feature Contextual Bottom Card (Interactive Inspect) */}
       {selectedFeature && (
-        <div className="absolute bottom-3 right-3 max-w-sm w-full z-30 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200 shadow-xl pointer-events-auto animate-slideUp">
+        <div className="absolute bottom-3 right-3 max-w-sm w-[calc(100%-1.5rem)] sm:w-full z-30 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200 shadow-xl pointer-events-auto animate-slideUp">
           <div className="flex items-start justify-between gap-3 mb-2">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold block">

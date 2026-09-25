@@ -483,7 +483,7 @@ export default function DataSystemHealth() {
               <span className="text-[10px] font-mono text-status-safe font-semibold">CELERY CLUSTER</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs font-mono">
               {/* Queue 1: Radar Ingest */}
               <div
                 onClick={() => setActiveQueueId('radar-ingest')}

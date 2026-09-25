@@ -1129,7 +1129,7 @@ export default function SafePlaces() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs font-mono">
                   <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
                     <span className="text-[10px] text-muted block">2005 Cloudburst</span>
                     <span className="font-bold text-rose-600">+{selectedPlace.historicalClearance?.deluge2005SurgeM || 4.2}m</span>

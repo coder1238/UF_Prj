@@ -138,7 +138,7 @@ export default function CitizenSidebar({ isOpen, onClose }) {
                         key={item.path}
                         to={item.path}
                         onClick={onClose}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-all relative text-left group ${
+                        className={`min-h-11 lg:min-h-0 w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-all relative text-left group ${
                           item.isEmergency
                             ? isActive 
                               ? 'bg-red-600 text-white font-bold shadow-sm'
@@ -207,4 +207,3 @@ export default function CitizenSidebar({ isOpen, onClose }) {
     </>
   );
 }
-

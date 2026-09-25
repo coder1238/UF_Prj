@@ -96,6 +96,13 @@
   animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+@media (max-width: 1023px) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   * {

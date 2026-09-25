@@ -126,19 +126,22 @@ export default function TopHeader({ onToggleSidebar }) {
       </div>
 
       {/* Main Top Header Bar */}
-      <div className="px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div className="px-2 sm:px-6 h-16 flex items-center justify-between gap-1.5 sm:gap-4 min-w-0">
         {/* Left: Mobile Sidebar Hamburger + Brand on mobile + Breadcrumb */}
         <div className="flex items-center gap-3">
           <button 
             onClick={onToggleSidebar}
-            className="lg:hidden p-2 rounded-xl text-slate-600 hover:text-ink hover:bg-slate-100 border border-slate-200 transition-colors shrink-0"
+            className="lg:hidden min-h-11 min-w-11 p-2 rounded-xl text-slate-600 hover:text-ink hover:bg-slate-100 border border-slate-200 transition-colors shrink-0"
             title="Open Navigation Menu"
           >
             <Menu className="w-5 h-5" />
           </button>
 
           {/* Compact brand logo visible on mobile/tablet */}
-          <div className="lg:hidden shrink-0">
+          <div className="lg:hidden shrink-0 sm:hidden">
+            <UrbanFloodLogo variant="icon-only" size="sm" showBadge={false} />
+          </div>
+          <div className="hidden sm:block lg:hidden shrink-0">
             <UrbanFloodLogo variant="compact" size="sm" showBadge={false} />
           </div>
 
@@ -151,13 +154,13 @@ export default function TopHeader({ onToggleSidebar }) {
         </div>
 
         {/* Right Actions: Ward Selector, Notifications, Report Hazard CTA, Profile */}
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-1.5 sm:gap-3">
           {/* Ward Selector */}
           <div className="relative">
             <select
               value={selectedWardId}
               onChange={(e) => setSelectedWardId(e.target.value)}
-              className="appearance-none bg-canvas hover:bg-slate-100 border border-slate-200 rounded-xl pl-8 pr-8 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-purple-primary transition shadow-2xs"
+              className="min-h-11 lg:min-h-0 max-w-[112px] sm:max-w-none appearance-none bg-canvas hover:bg-slate-100 border border-slate-200 rounded-xl pl-7 sm:pl-8 pr-6 sm:pr-8 py-2.5 sm:py-2 text-[10px] sm:text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-purple-primary transition shadow-2xs"
             >
               {WARDS_DATA.map(w => (
                 <option key={w.id} value={w.id}>
@@ -173,7 +176,7 @@ export default function TopHeader({ onToggleSidebar }) {
           <div className="relative">
             <button 
               onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-              className="p-2.5 rounded-xl text-slate-600 hover:text-ink hover:bg-slate-100 border border-slate-200 relative transition-colors shadow-2xs"
+              className="min-h-11 min-w-11 p-2.5 rounded-xl text-slate-600 hover:text-ink hover:bg-slate-100 border border-slate-200 relative transition-colors shadow-2xs"
               title="Notifications & Directives"
             >
               <Bell className="w-4 h-4" />
@@ -186,7 +189,7 @@ export default function TopHeader({ onToggleSidebar }) {
 
             {isNotificationsOpen && (
               <div 
-                className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-200 p-3 z-50 animate-fadeIn"
+                className="absolute right-0 mt-2 w-[min(20rem,calc(100vw-1rem))] sm:w-80 bg-white rounded-2xl shadow-xl border border-slate-200 p-3 z-50 animate-fadeIn"
                 onMouseLeave={() => setIsNotificationsOpen(false)}
               >
                 <div className="flex items-center justify-between pb-2 border-b border-slate-100">
@@ -230,7 +233,7 @@ export default function TopHeader({ onToggleSidebar }) {
           {/* Profile Badge Link */}
           <Link
             to="/profile"
-            className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs border transition-colors ${
+            className={`min-h-11 min-w-11 sm:min-h-9 sm:min-w-9 rounded-xl flex items-center justify-center font-bold text-xs border transition-colors ${
               location.pathname === '/profile' 
                 ? 'bg-purple-primary text-white border-purple-primary shadow-xs' 
                 : 'bg-canvas text-ink hover:bg-slate-100 border-slate-200'
@@ -255,4 +258,3 @@ export default function TopHeader({ onToggleSidebar }) {
     </header>
   );
 }
-

@@ -98,13 +98,15 @@ export const NAV_CATEGORIES = [
 // Flattened items for lookup by TopUtilityBar
 export const NAV_ITEMS = NAV_CATEGORIES.flatMap((c) => c.items);
 
-export default function NavigationRail() {
+export default function NavigationRail({ isOpen = false, onClose = () => {} }) {
   const location = useLocation();
   const { incidentList, alertsList } = useFloodCommand();
   const isCitizenView = location.pathname === '/citizen-view';
 
   return (
-    <aside className="w-[260px] flex-shrink-0 h-screen bg-surface border-r border-border flex flex-col justify-between z-40 select-none">
+    <>
+    {isOpen && <button type="button" aria-label="Close navigation menu" onClick={onClose} className="fixed inset-0 z-40 bg-ink/50 backdrop-blur-sm lg:hidden" />}
+    <aside className={`fixed inset-y-0 left-0 z-50 w-[260px] flex-shrink-0 h-screen bg-surface border-r border-border flex flex-col justify-between select-none transform transition-transform duration-300 lg:static lg:z-40 lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       {/* Top Section */}
       <div className="flex flex-col h-[calc(100vh-80px)] overflow-hidden">
         {/* Branding */}
@@ -151,6 +153,7 @@ export default function NavigationRail() {
         <div className="px-3 pt-3 flex-shrink-0">
           <Link
             to={isCitizenView ? '/command' : '/citizen-view'}
+            onClick={onClose}
             className={`w-full py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors border ${
               isCitizenView
                 ? 'bg-status-safe-soft text-status-safe border-status-safe/30 hover:bg-status-safe/20'
@@ -192,8 +195,9 @@ export default function NavigationRail() {
                   <NavLink
                     key={item.path}
                     to={item.path}
+                    onClick={onClose}
                     className={({ isActive }) =>
-                      `w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-all relative text-left group ${
+                      `min-h-11 lg:min-h-0 w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-all relative text-left group ${
                         isActive
                           ? 'bg-purple-soft text-purple font-semibold shadow-subtle'
                           : 'text-ink-secondary hover:text-ink hover:bg-surface-secondary'
@@ -268,5 +272,6 @@ export default function NavigationRail() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

@@ -946,7 +946,7 @@ export default function CriticalInfrastructure() {
                             {dg.status}
                           </span>
                         </div>
-                        <div className="grid grid-cols-3 gap-2 text-[10px] font-mono text-ink-secondary">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[10px] font-mono text-ink-secondary">
                           <div>Fuel: <strong className="text-ink">{dg.fuelPercent}%</strong></div>
                           <div>Runtime: <strong className="text-status-safe">{dg.runtimeHours} hrs</strong></div>
                           <div>Plinth: <strong className="text-purple">+{dg.plinthAboveGroundCm} cm</strong></div>
@@ -987,7 +987,7 @@ export default function CriticalInfrastructure() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-2 text-center font-mono">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono">
                       <div className="p-2 bg-surface-secondary rounded-xl border border-border">
                         <span className="text-[10px] text-ink-secondary block">Total Beds</span>
                         <strong className="text-sm font-bold text-ink">{activeAsset.beds}</strong>
@@ -1023,7 +1023,7 @@ export default function CriticalInfrastructure() {
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2 text-[10px] font-mono">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[10px] font-mono">
                       <div className="p-2 bg-surface-secondary rounded-lg border border-border">
                         <span className="text-ink-secondary block">Medical Oxygen</span>
                         <strong className="text-ink text-xs">{activeAsset.reserves.medicalOxygenDays} Days</strong>
@@ -1168,7 +1168,7 @@ export default function CriticalInfrastructure() {
                     <span className="font-bold text-ink uppercase tracking-wider text-[11px] font-mono block mb-1.5">
                       Hyper-Local Radar Micro-Nowcast (Feature 9)
                     </span>
-                    <div className="grid grid-cols-3 gap-2 text-center font-mono">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center font-mono">
                       <div className="p-2.5 bg-surface-secondary rounded-xl border border-border">
                         <span className="text-[10px] text-ink-secondary block">+30 min Rain</span>
                         <strong className="text-xs font-bold text-ink">{activeAsset.microForecast.next30mRainMm} mm</strong>

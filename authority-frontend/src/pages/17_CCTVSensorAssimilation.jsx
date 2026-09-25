@@ -596,7 +596,7 @@ export default function CCTVSensorAssimilation() {
       </div>
 
       {/* Top Telemetry Strip (Interactive) */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 p-6 pb-2">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 p-3 sm:p-6 pb-2">
         <div
           onClick={() => setLayoutMode(layoutMode === 'matrix' ? 'single' : 'matrix')}
           className="bg-surface p-3.5 rounded-xl border border-border shadow-subtle cursor-pointer hover:border-purple/50 transition-all group"
@@ -1118,7 +1118,7 @@ export default function CCTVSensorAssimilation() {
                     Surface Flow & Surge Kinetics
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs">
                   <div className="p-2 bg-surface rounded-lg border border-border">
                     <div className="text-[10px] text-ink-secondary">Velocity</div>
                     <div className="font-mono font-bold text-purple">{selectedCam.flowVelocity}</div>

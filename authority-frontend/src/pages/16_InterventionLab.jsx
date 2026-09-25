@@ -279,7 +279,7 @@ export default function InterventionLab() {
       </div>
 
       {/* Top Telemetry Strip */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 p-6 pb-2">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 p-3 sm:p-6 pb-2">
         <div className="bg-surface p-3.5 rounded-xl border border-border shadow-subtle">
           <div className="text-[11px] text-ink-secondary font-medium uppercase tracking-wider flex items-center justify-between">
             <span>Active Interventions</span>
