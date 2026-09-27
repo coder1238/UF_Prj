@@ -32,6 +32,17 @@ const wardShortName = (id = '') => ({
   'ward-h-west': 'Ward H-West', 'ward-g-north': 'Ward G-North', 'ward-f-north': 'Ward F-North', 'ward-a': 'Ward A',
 }[id] || id);
 
+const normalizeRoadCause = (cause, fallback = '') => (
+  cause && typeof cause === 'object'
+    ? (cause.explanation || fallback)
+    : (cause || fallback)
+);
+
+const normalizeRoad = (road, fallbackCause = '') => ({
+  ...road,
+  cause: normalizeRoadCause(road.cause, fallbackCause),
+});
+
 function mapAuthorityReport(report) {
   const status = ({ submitted: 'PENDING VERIFICATION', under_review: 'UNDER REVIEW', verified: 'OFFICIALLY VERIFIED & SQUAD EN ROUTE', rejected: 'REJECTED', resolved: 'RESOLVED BY FIELD PUMPING' })[report.status] || report.status;
   return { id: report.id, title: report.title, location: report.title, ward: wardShortName(report.ward_id), user: report.reporter_name || 'Citizen reporter', timestamp: report.submitted_at, reportedDepth: 'Not provided', comment: report.description, votes: 0, status, severity: report.severity, coordinates: [report.lat, report.lng] };
@@ -556,7 +567,7 @@ export function FloodCommandProvider({ children }) {
     setIsPlaying(false);
     const [wards, roads] = await Promise.all([getWards(), getRoads()]);
     setBackendWards(wards);
-    setBackendRoads(roads);
+    setBackendRoads(roads.map((road) => normalizeRoad(road)));
     return result;
   }, [authToken]);
 
@@ -572,13 +583,18 @@ export function FloodCommandProvider({ children }) {
       if (Array.isArray(event.roads_changed)) {
         setBackendRoads((previous) => (previous || []).map((road) => {
           const update = event.roads_changed.find((item) => item.id === road.id);
-          return update ? { ...road, ...update } : road;
+          return update ? normalizeRoad({ ...road, ...update }, road.cause) : road;
         }));
         setSelectedRoad((previous) => {
           const update = event.roads_changed.find((item) => item.id === previous?.id);
           if (!update) return previous;
           const status = { open: 'OPEN / CLEAR', restricted: 'CAUTION', flooded: 'CRITICAL', closed: 'CRITICAL' }[update.status] || update.status;
-          return { ...previous, status, currentDepth: update.current_depth_cm ?? previous.currentDepth };
+          return {
+            ...previous,
+            status,
+            currentDepth: update.current_depth_cm ?? previous.currentDepth,
+            cause: normalizeRoadCause(update.cause, previous.cause),
+          };
         });
       }
     } else if (event.type === 'report_update') {
@@ -600,7 +616,7 @@ export function FloodCommandProvider({ children }) {
       .then(([wards, roads, incidents, alerts, shelters, teams, reports]) => {
         if (!active) return;
         setBackendWards(wards);
-        setBackendRoads(roads);
+        setBackendRoads(roads.map((road) => normalizeRoad(road)));
         setBackendTeams(teams);
         setIsLiveBackend(true);
         const mappedIncidents = incidents.map((incident) => mapAuthorityIncident(incident, reports, INCIDENTS));
@@ -618,7 +634,7 @@ export function FloodCommandProvider({ children }) {
             || ROAD_CORRIDORS.find((item) => normalizedName.includes('subway') && item.name.toLowerCase().includes('subway'))
             || ROAD_CORRIDORS[0] || {};
           const state = { open: 'OPEN / CLEAR', restricted: 'CAUTION', flooded: 'CRITICAL', closed: 'CRITICAL' }[road.status] || road.status;
-          setSelectedRoad({ ...base, ...road, ward: wardShortName(road.ward_id), status: state, currentDepth: road.current_depth_cm, coordinates: road.geometry_geojson?.[0] ? [road.geometry_geojson[0][1], road.geometry_geojson[0][0]] : base.coordinates });
+          setSelectedRoad({ ...base, ...road, ward: wardShortName(road.ward_id), status: state, currentDepth: road.current_depth_cm, coordinates: road.geometry_geojson?.[0] ? [road.geometry_geojson[0][1], road.geometry_geojson[0][0]] : base.coordinates, cause: (road.cause && typeof road.cause === 'object') ? (road.cause.explanation || base.cause) : (road.cause || base.cause) });
         }
       })
       .catch(() => {
