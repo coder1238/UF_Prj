@@ -10,33 +10,53 @@ import {
 import { GNN_RUNOFF_ZONES_GEOJSON } from '../../data/communityData';
 
 const CARTO_API_KEY = import.meta.env.VITE_CARTO_API_KEY?.trim();
-const OSM_TILES = ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'];
 
-// 4 High-Resolution Map Tile Basemap Styles
+// Generates tile URLs: uses CARTO if user provided an API key; otherwise falls back to free high-reliability Esri basemaps
+const getBasemapTiles = (cartoType, esriService) => {
+  if (CARTO_API_KEY) {
+    const hosts = ['a', 'b', 'c', 'd'];
+    return hosts.map((h) =>
+      `https://${h}.basemaps.cartocdn.com/${cartoType}/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`
+    );
+  }
+  return [`https://server.arcgisonline.com/ArcGIS/rest/services/${esriService}/MapServer/tile/{z}/{y}/{x}`];
+};
+
+const getBasemapAttribution = () => {
+  if (CARTO_API_KEY) {
+    return '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  }
+  return '&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, USGS, NGA';
+};
+
+// 4 High-Resolution Map Tile Basemap Styles (Fast, zero watermark)
 const BASEMAP_STYLES = {
+  osm: {
+    id: 'osm',
+    name: 'OSM Standard',
+    tiles: [
+      'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
+      'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+    ],
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  },
   carto: {
     id: 'carto',
-    name: 'Carto Clean',
-    tiles: CARTO_API_KEY ? [`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`] : OSM_TILES,
-    attribution: '&copy; OpenStreetMap &copy; CARTO'
+    name: CARTO_API_KEY ? 'Carto Clean' : 'Street Map',
+    tiles: getBasemapTiles('rastertiles/voyager', 'World_Street_Map'),
+    attribution: getBasemapAttribution()
   },
   dark: {
     id: 'dark',
-    name: 'Tactical Dark',
-    tiles: CARTO_API_KEY ? [`https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`] : OSM_TILES,
-    attribution: '&copy; OpenStreetMap &copy; CARTO Dark'
+    name: CARTO_API_KEY ? 'Tactical Dark' : 'Dark Matter',
+    tiles: getBasemapTiles('dark_all', 'Canvas/World_Dark_Gray_Base'),
+    attribution: getBasemapAttribution()
   },
   satellite: {
     id: 'satellite',
     name: 'Satellite Recon',
     tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
     attribution: '&copy; Esri World Imagery'
-  },
-  osm: {
-    id: 'osm',
-    name: 'OSM Standard',
-    tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-    attribution: '&copy; OpenStreetMap contributors'
   }
 };
 
@@ -110,9 +130,9 @@ export default function CommunityMapCanvas({
         sources: {
           'basemap-tiles': {
             type: 'raster',
-            tiles: BASEMAP_STYLES[activeBasemap].tiles,
+            tiles: (BASEMAP_STYLES[activeBasemap] || BASEMAP_STYLES.osm || BASEMAP_STYLES.carto)?.tiles,
             tileSize: 256,
-            attribution: BASEMAP_STYLES[activeBasemap].attribution
+            attribution: (BASEMAP_STYLES[activeBasemap] || BASEMAP_STYLES.osm || BASEMAP_STYLES.carto)?.attribution
           }
         },
         layers: [
@@ -247,8 +267,9 @@ export default function CommunityMapCanvas({
     if (!map || !map.isStyleLoaded()) return;
 
     const source = map.getSource('basemap-tiles');
-    if (source && source.setTiles) {
-      source.setTiles(BASEMAP_STYLES[activeBasemap].tiles);
+    const newTiles = (BASEMAP_STYLES[activeBasemap] || BASEMAP_STYLES.osm || BASEMAP_STYLES.carto)?.tiles;
+    if (source && source.setTiles && newTiles) {
+      source.setTiles(newTiles);
     }
   }, [activeBasemap]);
 

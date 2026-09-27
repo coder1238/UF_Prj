@@ -50,56 +50,76 @@ import {
 } from '../../data/forecastExtraData';
 
 const CARTO_API_KEY = import.meta.env.VITE_CARTO_API_KEY?.trim();
-const OSM_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
-// 5 High-Quality Map Tile Styles
+// Generates tile URLs: uses CARTO if user provided an API key; otherwise falls back to free high-reliability Esri basemaps
+const getBasemapTiles = (cartoType, esriService) => {
+  if (CARTO_API_KEY) {
+    const hosts = ['a', 'b', 'c', 'd'];
+    return hosts.map((h) =>
+      `https://${h}.basemaps.cartocdn.com/${cartoType}/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`
+    );
+  }
+  return [`https://server.arcgisonline.com/ArcGIS/rest/services/${esriService}/MapServer/tile/{z}/{y}/{x}`];
+};
+
+const getBasemapAttribution = () => {
+  if (CARTO_API_KEY) {
+    return '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  }
+  return '&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, USGS, NGA';
+};
+
+// 5 High-Quality Map Tile Styles (Fast, reliable, zero watermark)
 const TILE_STYLES = {
-  carto: {
-    name: 'Carto Clean',
-    label: 'Clean Day',
-    style: {
-      version: 8,
-      sources: {
-        'carto-tiles': {
-          type: 'raster',
-          tiles: [CARTO_API_KEY ? `https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}` : OSM_TILES],
-          tileSize: 256,
-          attribution: '&copy; OpenStreetMap &copy; CARTO'
-        }
-      },
-      layers: [{ id: 'carto-tiles-layer', type: 'raster', source: 'carto-tiles', minzoom: 0, maxzoom: 19 }]
-    }
-  },
-  dark: {
-    name: 'Dark Matter',
-    label: 'Night / Dark Ops',
-    style: {
-      version: 8,
-      sources: {
-        'dark-tiles': {
-          type: 'raster',
-          tiles: [CARTO_API_KEY ? `https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}` : OSM_TILES],
-          tileSize: 256,
-          attribution: '&copy; OpenStreetMap &copy; CARTO Dark'
-        }
-      },
-      layers: [{ id: 'dark-tiles-layer', type: 'raster', source: 'dark-tiles', minzoom: 0, maxzoom: 19 }]
-    }
-  },
   osm: {
-    name: 'OpenStreetMap',
+    name: 'OpenStreetMap Standard',
     label: 'OSM Standard',
     style: {
       version: 8,
       sources: {
         'osm-tiles': {
           type: 'raster',
-          tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+          tiles: [
+            'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+          ],
           tileSize: 256,
-          attribution: '&copy; OpenStreetMap contributors'
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }
       },
       layers: [{ id: 'osm-tiles-layer', type: 'raster', source: 'osm-tiles', minzoom: 0, maxzoom: 19 }]
+    }
+  },
+  carto: {
+    name: CARTO_API_KEY ? 'Carto Clean' : 'Esri Street Map',
+    label: 'Street View',
+    style: {
+      version: 8,
+      sources: {
+        'carto-tiles': {
+          type: 'raster',
+          tiles: getBasemapTiles('rastertiles/voyager', 'World_Street_Map'),
+          tileSize: 256,
+          attribution: getBasemapAttribution()
+        }
+      },
+      layers: [{ id: 'carto-tiles-layer', type: 'raster', source: 'carto-tiles', minzoom: 0, maxzoom: 19 }]
+    }
+  },
+  dark: {
+    name: CARTO_API_KEY ? 'Dark Matter' : 'Tactical Dark',
+    label: 'Night / Dark Ops',
+    style: {
+      version: 8,
+      sources: {
+        'dark-tiles': {
+          type: 'raster',
+          tiles: getBasemapTiles('dark_all', 'Canvas/World_Dark_Gray_Base'),
+          tileSize: 256,
+          attribution: getBasemapAttribution()
+        }
+      },
+      layers: [{ id: 'dark-tiles-layer', type: 'raster', source: 'dark-tiles', minzoom: 0, maxzoom: 19 }]
     }
   },
   satellite: {
@@ -126,12 +146,12 @@ const TILE_STYLES = {
       sources: {
         'topo-tiles': {
           type: 'raster',
-          tiles: ['https://tile.opentopomap.org/{z}/{x}/{y}.png'],
+          tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'],
           tileSize: 256,
-          attribution: '&copy; OpenTopoMap contributors'
+          attribution: '&copy; Esri &mdash; National Geographic, DeLorme, HERE, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, increment P Corp.'
         }
       },
-      layers: [{ id: 'topo-tiles-layer', type: 'raster', source: 'topo-tiles', minzoom: 0, maxzoom: 17 }]
+      layers: [{ id: 'topo-tiles-layer', type: 'raster', source: 'topo-tiles', minzoom: 0, maxzoom: 18 }]
     }
   }
 };
@@ -623,7 +643,7 @@ export default function InteractiveMapCanvas({
 
     const map = new Map({
       container: mapContainer.current,
-      style: TILE_STYLES[activeTileStyle].style,
+      style: (TILE_STYLES[activeTileStyle] || TILE_STYLES.osm || TILE_STYLES.carto)?.style,
       center: initialCenter,
       zoom: 12.4,
       minZoom: 9.5,
@@ -1183,7 +1203,7 @@ export default function InteractiveMapCanvas({
         <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-[11px] font-mono font-extrabold text-slate-900 uppercase tracking-wider">
-            {TILE_STYLES[activeTileStyle].name}
+            {(TILE_STYLES[activeTileStyle] || TILE_STYLES.osm || TILE_STYLES.carto)?.name || 'Map'}
           </span>
           <span className="text-[10px] font-mono font-bold bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full border border-purple-200">
             {currentTimeline.label}

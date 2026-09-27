@@ -1,4 +1,17 @@
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
+const REMOTE_PROD_URL = 'https://uf-prj.onrender.com';
+
+function resolveApiBaseUrl() {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (typeof window !== 'undefined') {
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    if (!isLocalhost && (!envUrl || envUrl.includes('localhost'))) {
+      return REMOTE_PROD_URL;
+    }
+  }
+  return (envUrl || 'http://localhost:8000').replace(/\/$/, '');
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 const REQUEST_TIMEOUT_MS = 4000;
 let sessionToken = null;
 export const setSessionToken = (token) => { sessionToken = token || null; };
@@ -12,7 +25,26 @@ export async function request(path, { method = 'GET', body, token, headers = {},
   const auth = token || sessionToken;
   if (auth) requestHeaders.Authorization = `Bearer ${auth}`;
   try {
-    const response = await fetch(`${API_BASE_URL}${path}`, { method, headers: requestHeaders, body: body === undefined ? undefined : body instanceof URLSearchParams ? body : JSON.stringify(body), signal: controller.signal });
+    let response;
+    try {
+      response = await fetch(`${API_BASE_URL}${path}`, {
+        method,
+        headers: requestHeaders,
+        body: body === undefined ? undefined : body instanceof URLSearchParams ? body : JSON.stringify(body),
+        signal: controller.signal,
+      });
+    } catch (fetchErr) {
+      if (API_BASE_URL.includes('localhost') && fetchErr.name !== 'AbortError') {
+        response = await fetch(`${REMOTE_PROD_URL}${path}`, {
+          method,
+          headers: requestHeaders,
+          body: body === undefined ? undefined : body instanceof URLSearchParams ? body : JSON.stringify(body),
+          signal: controller.signal,
+        });
+      } else {
+        throw fetchErr;
+      }
+    }
     const contentType = response.headers.get('content-type') || '';
     const data = response.status === 204 ? null : contentType.includes('application/json') ? await response.json() : await response.text();
     if (!response.ok) {
